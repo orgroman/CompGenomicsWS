@@ -1,0 +1,13 @@
+name: bioinfo
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - fastqc=0.12.1
+  - samtools
+  - ipykernel
+  - ipython
+  - nbformat
+  - pandas
+  - plotly
