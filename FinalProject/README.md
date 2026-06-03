@@ -30,11 +30,11 @@ Links for your raw sequences and run reports.
 
 **You need Reichman username and password to access the links.**
 
-[Team A](XXX)
+[Team A](https://postidcac-my.sharepoint.com/:f:/g/personal/amit_levon_post_runi_ac_il/IgCMNch_hE2AToxhv21nhIxoAfil1-gQReaPdPSVwbYQWVM?e=gDItQj)
 
-[Team C](XXX)
+[Team C](https://postidcac-my.sharepoint.com/:f:/g/personal/amit_levon_post_runi_ac_il/IgDAH2F-iMgvR49tE8d12QahAQFbRVHaoEJJ-fv-OX7t1Gc?e=8edpdz)
 
-[Team D](XXX)
+[Team D](https://postidcac-my.sharepoint.com/:f:/g/personal/amit_levon_post_runi_ac_il/IgCEgJy0_0-STKRflGAzYi-fAd7XYv0zPJdr7YstdDQ_R-Q?e=CHMUqO)
 
 ## QC/A
 
