@@ -32,6 +32,7 @@
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.55;
+      overflow-x: hidden;
     }
 
     a {
@@ -328,6 +329,13 @@
         grid-template-columns: 1fr;
       }
 
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100%;
+      }
+
       nav {
         position: static;
       }
@@ -359,6 +367,7 @@
       <a href="#microbiome">Microbiome</a>
       <a href="#assembly">Assembly</a>
       <a href="#reproducibility">Reproducibility</a>
+      <a href="#presentation">Presentation</a>
     </div>
   </nav>
 
@@ -384,6 +393,21 @@
         </div>
       </div>
       <p>The report uses a curated subset of outputs suitable for GitHub Pages. Large raw data, reference genomes, BAMs, Kraken databases, and secrets remain local and are intentionally excluded from publication.</p>
+      <div class="callout">
+        <strong>Final conclusion.</strong>
+        Group D's unknown fecal sample is most consistent with domestic cat as the host. The host signal is modest, which is expected for feces, but it is strongest for cat across mapped reads, aligned bases, and MAPQ. The non-host fraction is dominated by <em>Proteus mirabilis</em>, and a focused Flye assembly of those reads aligns broadly and at high identity to a public <em>P. mirabilis</em> reference.
+      </div>
+      <table>
+        <thead>
+          <tr><th>Question</th><th>Main evidence</th><th>Answer</th><th>Confidence boundary</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Which animal?</td><td>Domestic cat has 14,669 primary mapped reads, 15.9 Mb aligned bases, and mean MAPQ 50.34 in the six-genome comparison.</td><td>Domestic cat</td><td>Only a small fraction of fecal reads are host-derived, so the decision is relative across candidates.</td></tr>
+          <tr><td>Which host functional region?</td><td>BMP6 has the highest summarized gene overlap: 35 reads and best MAPQ 60.</td><td>BMP6 candidate locus</td><td>Most BMP6 support is concentrated in a narrow low-MAPQ pileup, so it is a candidate rather than complete gene coverage.</td></tr>
+          <tr><td>Which dominant microbe?</td><td>Kraken2 assigns 98,025 clade reads, 34.35% of host-unmapped reads, to <em>Proteus mirabilis</em>.</td><td><em>Proteus mirabilis</em></td><td>Classification depends on the compact database and long-read error profile.</td></tr>
+          <tr><td>Does the microbe assembly match a reference?</td><td>Flye assembly is 3.86 Mbp in 24 contigs; dnadiff reports 94.17% assembly alignment and 99.33% average identity to HI4320.</td><td>Reference-supported <em>P. mirabilis</em> assembly</td><td>The assembly is fragmented and metagenomic, not a closed isolate genome.</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section id="assignment">
@@ -397,6 +421,19 @@
         <div><strong>Done:</strong> Microbiome classification and visualization from host-unmapped reads using Kraken2.</div>
         <div><strong>Done:</strong> Assembly of abundant <em>Proteus mirabilis</em> reads and comparison to a public reference with dnadiff.</div>
       </div>
+      <table>
+        <thead>
+          <tr><th>Assignment deliverable</th><th>Where it appears here</th><th>Output artifact</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>QC/A and filtering explanation</td><td>Section 1</td><td>Quality-retention plot, MinKNOW report, NanoComp/NanoPlot reports.</td></tr>
+          <tr><td>Comparative host alignment</td><td>Section 2</td><td>Six-genome alignment figure and host summary TSV.</td></tr>
+          <tr><td>Functional genomic region</td><td>Section 3</td><td>Gene-overlap table, top-gene plot, BMP6 genome-browser-style locus panel.</td></tr>
+          <tr><td>Microbiome taxonomy and visualization</td><td>Section 4</td><td>Kraken2 classification plots, top species table, top genera table.</td></tr>
+          <tr><td>Abundant-species assembly and correctness metric</td><td>Section 5</td><td>Flye contig plots, assembly stats, dnadiff reference comparison.</td></tr>
+          <tr><td>15-minute presentation summary</td><td>Section 7</td><td>Three-part presentation outline and take-home message.</td></tr>
+        </tbody>
+      </table>
       <div class="flow" aria-label="Analysis workflow">
         <div><strong>1. Reports</strong><span>Parse MinKNOW, NanoComp, and NanoPlot outputs.</span></div>
         <div><strong>2. Filter</strong><span>Use Q10 and length >= 500 bp for a reproducible high-signal subset.</span></div>
@@ -431,6 +468,17 @@
         <img src="assets/group_d_quality_retention.png" alt="Quality cutoff retention plot for Group D reads and bases">
         <figcaption>Quality-retention plot showing why Q10 is the practical default threshold for downstream host alignment and microbiome classification.</figcaption>
       </figure>
+      <table>
+        <thead>
+          <tr><th>Quality cutoff</th><th>Reads retained</th><th>Read retention</th><th>Bases retained</th><th>Base retention</th><th>Decision</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Raw</td><td>1,803,479</td><td>100.0%</td><td>1,978.7 Mb</td><td>100.0%</td><td>Baseline FASTQ evidence.</td></tr>
+          <tr><td>&gt;Q10</td><td>1,356,233</td><td>75.2%</td><td>1,627.2 Mb</td><td>82.2%</td><td>Chosen quality threshold for downstream work.</td></tr>
+          <tr><td>&gt;Q15</td><td>874,743</td><td>48.5%</td><td>1,254.6 Mb</td><td>63.4%</td><td>Useful sensitivity threshold, but too aggressive as default.</td></tr>
+          <tr><td>&gt;Q20</td><td>150,636</td><td>8.4%</td><td>199.9 Mb</td><td>10.1%</td><td>Too little data for broad host and microbiome exploration.</td></tr>
+        </tbody>
+      </table>
       <div class="three-col">
         <div class="mini-card">
           <h3>Chosen filter</h3>
@@ -446,6 +494,7 @@
         </div>
       </div>
       <div class="links">
+        <a class="button" href="data/group_d_quality_retention.tsv">Quality retention TSV</a>
         <a class="button" href="reports/report_FBG58625_GroupD.html">MinKNOW report</a>
         <a class="button" href="reports/NanoComp-report.html">NanoComp report</a>
         <a class="button" href="reports/group_d_NanoPlot-report.html">NanoPlot report</a>
@@ -488,16 +537,28 @@
         <strong>BMP6 interpretation caveat.</strong>
         BMP6 is the top summarized gene overlap with 35 reads and best MAPQ 60, but the IGV-style locus view shows that much of the read pileup is concentrated in a small interval with low MAPQ. The result is useful as a functional-region candidate, not as proof of full high-confidence gene coverage.
       </div>
-      <div class="two-col">
-        <figure>
-          <img src="assets/host_functional_regions_top_genes.png" alt="Top annotated domestic-cat genes supported by mapped reads">
-          <figcaption>Top domestic-cat annotated regions by distinct overlapping mapped reads.</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/igv_style_bmp6_locus.png" alt="IGV-style BMP6 locus view with coverage and read pileup">
-          <figcaption>Static IGV-style view of BMP6 showing gene context, binned coverage, zoomed read pileup, and MAPQ coloring.</figcaption>
-        </figure>
+      <div class="three-col">
+        <div class="mini-card">
+          <h3>What BMP6 does</h3>
+          <p>BMP6 is part of the bone morphogenetic protein family, a TGF-beta signaling group involved in development, tissue regulation, and skeletal biology.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Why it is interpretable</h3>
+          <p>Unlike many predicted loci, BMP6 has a recognizable gene name and a well-described biological role, making it suitable for the functional-region presentation requirement.</p>
+        </div>
+        <div class="mini-card">
+          <h3>How to present it</h3>
+          <p>Present BMP6 as a host-region example found by annotation overlap, then immediately show the MAPQ-aware locus caveat.</p>
+        </div>
       </div>
+      <figure>
+        <img src="assets/host_functional_regions_top_genes.png" alt="Top annotated domestic-cat genes supported by mapped reads">
+        <figcaption>Top domestic-cat annotated regions by distinct overlapping mapped reads. BMP6 ranks first by read count, making it the natural locus to inspect in more detail.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/igv_style_bmp6_locus.png" alt="IGV-style BMP6 locus view with coverage and read pileup">
+        <figcaption>Genome-browser-style BMP6 view. The left zoom shows 33 short reads concentrated in a narrow low-MAPQ pileup; the right zoom shows 2 separate MAPQ-60 supporting reads. This is why BMP6 is presented as a functional-region candidate with a clear confidence caveat.</figcaption>
+      </figure>
       <table>
         <thead>
           <tr><th>Gene</th><th>Contig</th><th>Reads</th><th>Best MAPQ</th><th>Biological context</th></tr>
@@ -544,6 +605,18 @@
           <tr><td><em>Sporosarcina oncorhynchi</em></td><td>1.22</td><td>3,486</td></tr>
         </tbody>
       </table>
+      <table>
+        <thead>
+          <tr><th>Genus</th><th>Percent</th><th>Clade reads</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><em>Proteus</em></td><td>35.11</td><td>100,191</td><td>Dominant genus; matches the species-level <em>P. mirabilis</em> signal.</td></tr>
+          <tr><td><em>Streptomyces</em></td><td>5.77</td><td>16,470</td><td>Secondary classified group, likely environmental/soil-associated contribution.</td></tr>
+          <tr><td><em>Escherichia</em></td><td>4.49</td><td>12,818</td><td>Common gut-associated genus present at lower abundance.</td></tr>
+          <tr><td><em>Sporosarcina</em></td><td>3.84</td><td>10,961</td><td>Additional lower-abundance bacterial signal.</td></tr>
+          <tr><td><em>Glutamicibacter</em></td><td>3.17</td><td>9,034</td><td>Lower-abundance genus contributing to the diverse classified fraction.</td></tr>
+        </tbody>
+      </table>
       <div class="callout">
         <strong>Biological interpretation.</strong>
         A fecal sample should contain a mixture of host DNA, gut-associated microbes, environmental microbes, and unclassified sequence. The strong <em>Proteus mirabilis</em> signal is biologically plausible in a fecal/gut context and was also useful technically because it provided enough reads for a focused species assembly.
@@ -580,6 +653,7 @@
         </thead>
         <tbody>
           <tr><td>Reference genome</td><td><em>P. mirabilis</em> HI4320, GCF_000069965.1</td><td>Public comparison target from NCBI.</td></tr>
+          <tr><td>Contigs / longest contig</td><td>24 / 577,987 bp</td><td>Direct answer to the assignment's assembly-stats question.</td></tr>
           <tr><td>Assembly aligned</td><td>94.17%</td><td>Most assembled sequence aligns to the reference.</td></tr>
           <tr><td>Reference aligned</td><td>88.73%</td><td>The assembly covers most, but not all, of the reference.</td></tr>
           <tr><td>Average identity</td><td>99.33%</td><td>Aligned regions strongly match <em>P. mirabilis</em>.</td></tr>
