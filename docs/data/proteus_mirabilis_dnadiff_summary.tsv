@@ -1,0 +1,10 @@
+metric	value
+reference_sequences	2
+assembly_sequences	24
+reference_total_bp	4099895
+assembly_total_bp	3860722
+reference_aligned_bp_percent	3637987(88.73%)
+assembly_aligned_bp_percent	3635710(94.17%)
+average_identity_percent	99.33
+total_snps	19002
+total_indels	2258

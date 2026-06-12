@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Group D Final Bioinformatics Report</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #1d2733;
+      --muted: #667085;
+      --line: #d7dde8;
+      --accent: #245b73;
+      --accent-2: #7a4e2d;
+      --good: #2f6f4e;
+      --warn: #8a5a16;
+      --shadow: 0 14px 34px rgba(24, 38, 55, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      background: #10232f;
+      color: #ffffff;
+      padding: 56px 24px 34px;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      color: #a9cad8;
+      margin: 0 0 10px;
+      font-weight: 750;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 5vw, 4.2rem);
+      line-height: 1.02;
+      margin: 0 0 16px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: clamp(1.55rem, 3vw, 2.3rem);
+      line-height: 1.15;
+      margin: 0 0 12px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 0 0 8px;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: #dce9ef;
+      font-size: 1.08rem;
+      margin: 0;
+    }
+
+    .hero-note {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    nav .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      align-items: center;
+      padding: 12px 0;
+      font-size: 0.92rem;
+    }
+
+    main {
+      padding: 32px 0 56px;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin: 0 0 24px;
+      padding: clamp(20px, 3vw, 34px);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      padding: 16px;
+      background: #fbfcfe;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1.15;
+      color: var(--accent);
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    figure {
+      margin: 18px 0 0;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 12px;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 10px;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: #eef5f7;
+      padding: 14px 16px;
+      margin: 16px 0;
+    }
+
+    .caveat {
+      border-left-color: var(--warn);
+      background: #fff7e8;
+    }
+
+    .method {
+      border-left-color: var(--good);
+      background: #eef7f1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-top: 12px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: #ffffff;
+      padding: 9px 12px;
+      font-size: 0.92rem;
+    }
+
+    .button:hover {
+      background: #eef5f7;
+      text-decoration: none;
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .two-col,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <p class="eyebrow">Computational Genomics Final Project - Group D</p>
+        <h1>Long-read fecal microbiome analysis</h1>
+        <p class="lead">A curated report from Oxford Nanopore sequencing through QC, host-origin inference, functional host-region inspection, microbiome profiling, and assembly of an abundant microbe.</p>
+      </div>
+      <div class="hero-note">
+        <h3>Headline result</h3>
+        <p>The sample best matches <strong>domestic cat</strong>. The dominant classified microbe is <em>Proteus mirabilis</em>, assembled into a 3.86 Mbp Flye assembly with 99.33% average identity to the HI4320 reference in dnadiff.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="wrap">
+      <a href="#summary">Summary</a>
+      <a href="#qc">QC</a>
+      <a href="#host">Host origin</a>
+      <a href="#functional">Functional region</a>
+      <a href="#microbiome">Microbiome</a>
+      <a href="#assembly">Assembly</a>
+      <a href="#reproducibility">Reproducibility</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section id="summary">
+      <h2>Executive summary</h2>
+      <div class="grid">
+        <div class="stat">
+          <strong>Domestic cat</strong>
+          <span>Best host match from six candidate genomes using minimap2 PAF summaries.</span>
+        </div>
+        <div class="stat">
+          <strong>BMP6</strong>
+          <span>Top summarized annotated host-gene overlap; signal requires MAPQ-aware interpretation.</span>
+        </div>
+        <div class="stat">
+          <strong>34.35%</strong>
+          <span>Host-unmapped reads assigned to <em>Proteus mirabilis</em> by Kraken2 clade count.</span>
+        </div>
+        <div class="stat">
+          <strong>99.33%</strong>
+          <span>Average dnadiff identity of the Proteus assembly against reference HI4320.</span>
+        </div>
+      </div>
+      <p>The report uses a curated subset of outputs suitable for GitHub Pages. Large raw data, reference genomes, BAMs, Kraken databases, and secrets remain local and are intentionally excluded from publication.</p>
+    </section>
+
+    <section id="qc">
+      <h2>1. Sequencing QC and filtering</h2>
+      <div class="callout method">
+        <strong>Why both MinKNOW and NanoComp?</strong>
+        MinKNOW is used for run provenance: device, flow cell, kit, basecalling setup, and run counters. NanoComp/NanoPlot are used for FASTQ-level evidence: read counts, bases, read length, N50, and quality distributions that drive downstream filtering.
+      </div>
+      <p>Group D produced 1,803,479 reads and 1,978,672,910 bases in the NanoComp summary. The chosen Q10 and length >= 500 bp filtering rule keeps most usable sequence while removing the weakest and shortest reads. Stricter Q15/Q20 thresholds were considered, but they discard a much larger fraction of reads and bases.</p>
+      <figure>
+        <img src="assets/group_d_quality_retention.png" alt="Quality cutoff retention plot for Group D reads and bases">
+        <figcaption>Quality-retention plot showing why Q10 is the practical default threshold for downstream host alignment and microbiome classification.</figcaption>
+      </figure>
+      <div class="links">
+        <a class="button" href="reports/report_FBG58625_GroupD.html">MinKNOW report</a>
+        <a class="button" href="reports/NanoComp-report.html">NanoComp report</a>
+        <a class="button" href="reports/group_d_NanoPlot-report.html">NanoPlot report</a>
+      </div>
+    </section>
+
+    <section id="host">
+      <h2>2. Comparative host-origin assessment</h2>
+      <p>Filtered long reads were aligned against six candidate host genomes. We used <code>minimap2 -x map-ont</code> because the data are Oxford Nanopore reads and minimap2 is fast, standard, and produces compact PAF summaries. Alternatives such as <code>bwa mem</code>, BLAST, GraphMap, and k-mer classification were less appropriate for this long-read, multi-genome comparison.</p>
+      <figure>
+        <img src="assets/host_alignment_comparison.png" alt="Host alignment comparison for six candidate genomes">
+        <figcaption>Domestic cat leads on primary mapped reads, aligned bases, and mapping confidence, supporting it as the host origin.</figcaption>
+      </figure>
+      <table>
+        <thead>
+          <tr><th>Candidate</th><th>Primary mapped reads</th><th>Aligned bases</th><th>Mean MAPQ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Domestic cat</td><td>14,669</td><td>15,916,983</td><td>50.34</td></tr>
+          <tr><td>Golden jackal</td><td>9,251</td><td>7,818,568</td><td>28.25</td></tr>
+          <tr><td>Little brown bat</td><td>3,818</td><td>2,698,838</td><td>19.20</td></tr>
+        </tbody>
+      </table>
+      <div class="links">
+        <a class="button" href="data/host_alignment_summary_first300k.tsv">Host summary TSV</a>
+      </div>
+    </section>
+
+    <section id="functional">
+      <h2>3. Functional region in the host genome</h2>
+      <p>After choosing domestic cat as the host, the domestic-cat BAM was intersected with the NCBI GFF gene annotation. This direct read-to-gene overlap is a better fit here than full variant calling or gene-expression analysis because the data are mixed-origin genomic long reads, not controlled host variant or RNA-seq data.</p>
+      <div class="callout caveat">
+        <strong>BMP6 interpretation caveat.</strong>
+        BMP6 is the top summarized gene overlap with 35 reads and best MAPQ 60, but the IGV-style locus view shows that much of the read pileup is concentrated in a small interval with low MAPQ. The result is useful as a functional-region candidate, not as proof of full high-confidence gene coverage.
+      </div>
+      <div class="two-col">
+        <figure>
+          <img src="assets/host_functional_regions_top_genes.png" alt="Top annotated domestic-cat genes supported by mapped reads">
+          <figcaption>Top domestic-cat annotated regions by distinct overlapping mapped reads.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/igv_style_bmp6_locus.png" alt="IGV-style BMP6 locus view with coverage and read pileup">
+          <figcaption>Static IGV-style view of BMP6 showing gene context, binned coverage, zoomed read pileup, and MAPQ coloring.</figcaption>
+        </figure>
+      </div>
+      <div class="links">
+        <a class="button" href="data/host_functional_regions_summary.tsv">Functional regions TSV</a>
+      </div>
+    </section>
+
+    <section id="microbiome">
+      <h2>4. Microbiome exploration</h2>
+      <p>Host-unmapped reads were classified with Kraken2 using a compact public database. Kraken2 was chosen over Centrifuge, MetaPhlAn, Kaiju, and BLAST/DIAMOND-style approaches because it is fast, has suitable public databases, and keeps read-level assignments that can be used to extract reads for assembly. MetaPhlAn would be strong for marker-based profiling, but it does not naturally provide all species-assigned reads for assembly.</p>
+      <div class="two-col">
+        <figure>
+          <img src="assets/group_d_microbiome_classification_and_genera.png" alt="Kraken2 classified rate and top microbial genera">
+          <figcaption>Kraken2 classified 76.08% of host-unmapped reads. The genus-level profile is dominated by Proteus, followed by lower-abundance genera.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/group_d.microbiome_top_species.png" alt="Top microbial species in Group D host-unmapped reads">
+          <figcaption><em>Proteus mirabilis</em> is the dominant species-level call with 98,025 clade reads, or 34.35% of host-unmapped reads.</figcaption>
+        </figure>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Species</th><th>Percent</th><th>Clade reads</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><em>Proteus mirabilis</em></td><td>34.35</td><td>98,025</td></tr>
+          <tr><td><em>Escherichia coli</em></td><td>4.13</td><td>11,794</td></tr>
+          <tr><td><em>Glutamicibacter protophormiae</em></td><td>2.11</td><td>6,029</td></tr>
+        </tbody>
+      </table>
+      <div class="links">
+        <a class="button" href="data/group_d.microbiome_top_species.tsv">Top species TSV</a>
+        <a class="button" href="data/group_d.kraken2.top_genera.tsv">Top genera TSV</a>
+      </div>
+    </section>
+
+    <section id="assembly">
+      <h2>5. Species assembly and reference comparison</h2>
+      <p><em>Proteus mirabilis</em> was selected for assembly because it was the dominant classified species and has public reference genomes. Reads assigned to the species taxid and observed child strain taxids were assembled with Flye. Flye was chosen over Canu, Raven, Shasta, wtdbg2, and short-read assemblers because it is widely used for noisy ONT reads and is practical for this notebook workflow.</p>
+      <div class="grid">
+        <div class="stat"><strong>98,025</strong><span>Proteus reads extracted</span></div>
+        <div class="stat"><strong>3.86 Mbp</strong><span>Flye assembly length</span></div>
+        <div class="stat"><strong>24</strong><span>Contigs/fragments</span></div>
+        <div class="stat"><strong>249,377 bp</strong><span>N50</span></div>
+      </div>
+      <div class="two-col">
+        <figure>
+          <img src="assets/proteus_assembly_contigs.png" alt="Proteus assembly contig length and coverage plots">
+          <figcaption>Flye contig length distribution and coverage. The assembly is fragmented, as expected from a subset of metagenomic ONT reads.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/proteus_dnadiff_summary.png" alt="dnadiff summary comparing Proteus assembly to HI4320 reference">
+          <figcaption>dnadiff against <em>Proteus mirabilis</em> HI4320: 94.17% of the assembly aligned, 88.73% of the reference aligned, and average identity was 99.33%.</figcaption>
+        </figure>
+      </div>
+      <p>dnadiff was chosen because it reports direct reference alignment coverage, identity, SNPs, and indels. QUAST/metaQUAST, Mash/ANI, minimap2 summaries, and CheckM/BUSCO-style completeness checks are reasonable additions, but dnadiff directly answers the assignment's reference-comparison requirement.</p>
+      <div class="links">
+        <a class="button" href="data/assembly_proteus_mirabilis_stats.tsv">Assembly stats TSV</a>
+        <a class="button" href="data/proteus_mirabilis_dnadiff_summary.tsv">dnadiff summary TSV</a>
+        <a class="button" href="data/reference_proteus_mirabilis_stats.tsv">Reference stats TSV</a>
+      </div>
+    </section>
+
+    <section id="reproducibility">
+      <h2>6. Reproducibility and notebooks</h2>
+      <p>The full analysis notebooks include the executable workflow, skip-if-present logic, tool alternatives, and the final conclusions. The Colab copy is prepared for a Google Drive-style root and can install command-line dependencies in a fresh runtime.</p>
+      <div class="links">
+        <a class="button" href="notebooks/FinalProject_Teaching_Step_By_Step.html">Rendered notebook</a>
+        <a class="button" href="notebooks/FinalProject_Teaching_Step_By_Step.ipynb">Download notebook</a>
+        <a class="button" href="notebooks/FinalProject_Teaching_Step_By_Step_Colab_v2.html">Rendered Colab notebook</a>
+        <a class="button" href="notebooks/FinalProject_Teaching_Step_By_Step_Colab_v2.ipynb">Download Colab notebook</a>
+      </div>
+      <div class="callout">
+        <strong>Data publishing boundary.</strong>
+        This GitHub Pages site intentionally excludes raw reads, large references, BAMs, Kraken databases, downloaded tools, and the NCBI API key. Those files are local reproducibility inputs, not web-public artifacts.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Group D final project report. Static site generated from curated analysis outputs in the repository.
+    </div>
+  </footer>
+</body>
+</html>

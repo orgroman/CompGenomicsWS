@@ -1,0 +1,13 @@
+percent	clade_reads	taxon_reads	rank	taxid	name
+34.35	98025	97848	S	584	Proteus mirabilis
+4.13	11794	11308	S	562	Escherichia coli
+2.11	6029	6029	S	37930	Glutamicibacter protophormiae
+1.7	4860	4860	S	2912187	Solibacillus daqui
+1.22	3486	3486	S	3056444	Sporosarcina oncorhynchi
+1.15	3279	3279	S	3064529	Prescottella sp. R16
+1.03	2931	2931	S	1571	Sporosarcina ureae
+0.74	2116	2116	S	2921557	Sporosarcina sp. FSL K6-3508
+0.72	2044	1989	S	1598	Limosilactobacillus reuteri
+0.66	1875	1846	S	33959	Lactobacillus johnsonii
+0.54	1552	1452	S	1502	Clostridium perfringens
+0.47	1330	1322	S	1622	Ligilactobacillus murinus

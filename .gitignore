@@ -1,0 +1,8 @@
+FinalProject/.secret.ncbi
+.secret.ncbi
+
+# Final project local/generated analysis workspace.
+# Curated, publishable copies live under docs/.
+FinalProject/*
+!FinalProject/README.md
+!FinalProject/Example_presentation.pdf
