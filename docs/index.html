@@ -165,6 +165,52 @@
       align-items: start;
     }
 
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      padding: 14px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0 6px;
+    }
+
+    .flow div {
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      padding: 12px;
+      min-height: 92px;
+    }
+
+    .flow strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 6px;
+      font-size: 0.94rem;
+    }
+
+    .flow span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
     figure {
       margin: 18px 0 0;
       border: 1px solid var(--line);
@@ -245,6 +291,27 @@
       text-decoration: none;
     }
 
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .checklist div {
+      border: 1px solid var(--line);
+      padding: 12px;
+      background: #fbfcfe;
+    }
+
+    .checklist strong {
+      color: var(--good);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
     footer {
       padding: 28px 0 42px;
       color: var(--muted);
@@ -254,6 +321,9 @@
     @media (max-width: 860px) {
       .hero,
       .two-col,
+      .three-col,
+      .flow,
+      .checklist,
       .grid {
         grid-template-columns: 1fr;
       }
@@ -282,6 +352,7 @@
   <nav>
     <div class="wrap">
       <a href="#summary">Summary</a>
+      <a href="#assignment">Assignment map</a>
       <a href="#qc">QC</a>
       <a href="#host">Host origin</a>
       <a href="#functional">Functional region</a>
@@ -315,6 +386,27 @@
       <p>The report uses a curated subset of outputs suitable for GitHub Pages. Large raw data, reference genomes, BAMs, Kraken databases, and secrets remain local and are intentionally excluded from publication.</p>
     </section>
 
+    <section id="assignment">
+      <h2>How this answers the final assignment</h2>
+      <p>The assignment asks for a complete bioinformatics story from long-read sequencing data: QC and filtering, host-origin inference, functional-region interpretation, microbiome exploration, assembly of one abundant microbe, and a presentation-ready summary. This page is organized in that same order so each section can map directly to a grading/presentation requirement.</p>
+      <div class="checklist">
+        <div><strong>Done:</strong> General FASTQ/run statistics and at least three visual metrics from NanoComp/NanoPlot and MinKNOW.</div>
+        <div><strong>Done:</strong> Filtering logic using Q10 and length >= 500 bp, with retention plots explaining the tradeoff.</div>
+        <div><strong>Done:</strong> Comparative alignment to six candidate animal genomes, with domestic cat selected by mapping quantity and quality.</div>
+        <div><strong>Done:</strong> Functional host-region search using domestic-cat GFF overlaps, with BMP6 reported and inspected in an IGV-style locus view.</div>
+        <div><strong>Done:</strong> Microbiome classification and visualization from host-unmapped reads using Kraken2.</div>
+        <div><strong>Done:</strong> Assembly of abundant <em>Proteus mirabilis</em> reads and comparison to a public reference with dnadiff.</div>
+      </div>
+      <div class="flow" aria-label="Analysis workflow">
+        <div><strong>1. Reports</strong><span>Parse MinKNOW, NanoComp, and NanoPlot outputs.</span></div>
+        <div><strong>2. Filter</strong><span>Use Q10 and length >= 500 bp for a reproducible high-signal subset.</span></div>
+        <div><strong>3. Host</strong><span>Align reads to six candidate genomes with minimap2.</span></div>
+        <div><strong>4. Genes</strong><span>Intersect domestic-cat BAM alignments with NCBI GFF genes.</span></div>
+        <div><strong>5. Microbes</strong><span>Classify host-unmapped reads with Kraken2 and visualize taxa.</span></div>
+        <div><strong>6. Assembly</strong><span>Extract <em>Proteus</em> reads, assemble with Flye, compare with dnadiff.</span></div>
+      </div>
+    </section>
+
     <section id="qc">
       <h2>1. Sequencing QC and filtering</h2>
       <div class="callout method">
@@ -322,10 +414,37 @@
         MinKNOW is used for run provenance: device, flow cell, kit, basecalling setup, and run counters. NanoComp/NanoPlot are used for FASTQ-level evidence: read counts, bases, read length, N50, and quality distributions that drive downstream filtering.
       </div>
       <p>Group D produced 1,803,479 reads and 1,978,672,910 bases in the NanoComp summary. The chosen Q10 and length >= 500 bp filtering rule keeps most usable sequence while removing the weakest and shortest reads. Stricter Q15/Q20 thresholds were considered, but they discard a much larger fraction of reads and bases.</p>
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Group D value</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reads</td><td>1,803,479</td><td>Enough depth for host screening and microbial classification.</td></tr>
+          <tr><td>Total bases</td><td>1.98 Gb</td><td>Large enough for a pilot host comparison and species-level assembly attempt.</td></tr>
+          <tr><td>Mean read length</td><td>1,097.1 bp</td><td>Shorter than ideal for ONT assembly, but still long-read data.</td></tr>
+          <tr><td>Median read length</td><td>512 bp</td><td>Explains why length filtering is useful before alignment/classification.</td></tr>
+          <tr><td>N50</td><td>2,297 bp</td><td>Some reads are long enough to anchor host and microbial alignments.</td></tr>
+          <tr><td>Mean quality</td><td>10.4</td><td>Supports using Q10 as a practical minimum threshold.</td></tr>
+        </tbody>
+      </table>
       <figure>
         <img src="assets/group_d_quality_retention.png" alt="Quality cutoff retention plot for Group D reads and bases">
         <figcaption>Quality-retention plot showing why Q10 is the practical default threshold for downstream host alignment and microbiome classification.</figcaption>
       </figure>
+      <div class="three-col">
+        <div class="mini-card">
+          <h3>Chosen filter</h3>
+          <p>Q >= 10 and length >= 500 bp. This keeps a broad long-read signal while removing the weakest reads.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Why not Q15?</h3>
+          <p>Q15 is cleaner, but it keeps only 48.5% of reads. That is too aggressive for host screening and metagenomic exploration.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Why a pilot subset?</h3>
+          <p>The first 300,000 filtered reads make the host comparison reproducible and practical across six large genomes.</p>
+        </div>
+      </div>
       <div class="links">
         <a class="button" href="reports/report_FBG58625_GroupD.html">MinKNOW report</a>
         <a class="button" href="reports/NanoComp-report.html">NanoComp report</a>
@@ -342,14 +461,21 @@
       </figure>
       <table>
         <thead>
-          <tr><th>Candidate</th><th>Primary mapped reads</th><th>Aligned bases</th><th>Mean MAPQ</th></tr>
+          <tr><th>Candidate</th><th>Primary mapped reads</th><th>Percent of 300k</th><th>Aligned bases</th><th>Mean MAPQ</th></tr>
         </thead>
         <tbody>
-          <tr><td>Domestic cat</td><td>14,669</td><td>15,916,983</td><td>50.34</td></tr>
-          <tr><td>Golden jackal</td><td>9,251</td><td>7,818,568</td><td>28.25</td></tr>
-          <tr><td>Little brown bat</td><td>3,818</td><td>2,698,838</td><td>19.20</td></tr>
+          <tr><td>Domestic cat</td><td>14,669</td><td>4.89%</td><td>15,916,983</td><td>50.34</td></tr>
+          <tr><td>Golden jackal</td><td>9,251</td><td>3.08%</td><td>7,818,568</td><td>28.25</td></tr>
+          <tr><td>Little brown bat</td><td>3,818</td><td>1.27%</td><td>2,698,838</td><td>19.20</td></tr>
+          <tr><td>Norway rat</td><td>1,393</td><td>0.46%</td><td>1,477,202</td><td>9.05</td></tr>
+          <tr><td>House mouse</td><td>1,379</td><td>0.46%</td><td>1,062,553</td><td>15.55</td></tr>
+          <tr><td>Eastern gray kangaroo</td><td>1,155</td><td>0.39%</td><td>1,124,731</td><td>13.71</td></tr>
         </tbody>
       </table>
+      <div class="callout">
+        <strong>Interpretation.</strong>
+        The low overall host-mapping percentage is expected for fecal sequencing because much of the sample is microbial. The decision comes from the relative pattern across candidates: domestic cat has the highest mapped-read count, the most aligned bases, and the strongest mapping quality.
+      </div>
       <div class="links">
         <a class="button" href="data/host_alignment_summary_first300k.tsv">Host summary TSV</a>
       </div>
@@ -372,6 +498,16 @@
           <figcaption>Static IGV-style view of BMP6 showing gene context, binned coverage, zoomed read pileup, and MAPQ coloring.</figcaption>
         </figure>
       </div>
+      <table>
+        <thead>
+          <tr><th>Gene</th><th>Contig</th><th>Reads</th><th>Best MAPQ</th><th>Biological context</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>BMP6</td><td>NC_058372.1</td><td>35</td><td>60</td><td>Bone morphogenetic protein family member involved in developmental signaling and iron/hepcidin regulation.</td></tr>
+          <tr><td>LOC123383640</td><td>NW_025408521.1</td><td>27</td><td>12</td><td>Predicted locus; lower MAPQ makes it less compelling as a presentation target.</td></tr>
+          <tr><td>LOC123384245</td><td>NC_058370.1</td><td>27</td><td>60</td><td>Predicted locus with stronger MAPQ but less interpretable biology than BMP6.</td></tr>
+        </tbody>
+      </table>
       <div class="links">
         <a class="button" href="data/host_functional_regions_summary.tsv">Functional regions TSV</a>
       </div>
@@ -380,6 +516,12 @@
     <section id="microbiome">
       <h2>4. Microbiome exploration</h2>
       <p>Host-unmapped reads were classified with Kraken2 using a compact public database. Kraken2 was chosen over Centrifuge, MetaPhlAn, Kaiju, and BLAST/DIAMOND-style approaches because it is fast, has suitable public databases, and keeps read-level assignments that can be used to extract reads for assembly. MetaPhlAn would be strong for marker-based profiling, but it does not naturally provide all species-assigned reads for assembly.</p>
+      <div class="grid">
+        <div class="stat"><strong>285,342</strong><span>Host-unmapped reads classified after host filtering.</span></div>
+        <div class="stat"><strong>76.08%</strong><span>Reads classified by Kraken2.</span></div>
+        <div class="stat"><strong>23.92%</strong><span>Reads remained unclassified.</span></div>
+        <div class="stat"><strong>98,025</strong><span><em>Proteus mirabilis</em> clade reads.</span></div>
+      </div>
       <div class="two-col">
         <figure>
           <img src="assets/group_d_microbiome_classification_and_genera.png" alt="Kraken2 classified rate and top microbial genera">
@@ -398,8 +540,14 @@
           <tr><td><em>Proteus mirabilis</em></td><td>34.35</td><td>98,025</td></tr>
           <tr><td><em>Escherichia coli</em></td><td>4.13</td><td>11,794</td></tr>
           <tr><td><em>Glutamicibacter protophormiae</em></td><td>2.11</td><td>6,029</td></tr>
+          <tr><td><em>Solibacillus daqui</em></td><td>1.70</td><td>4,860</td></tr>
+          <tr><td><em>Sporosarcina oncorhynchi</em></td><td>1.22</td><td>3,486</td></tr>
         </tbody>
       </table>
+      <div class="callout">
+        <strong>Biological interpretation.</strong>
+        A fecal sample should contain a mixture of host DNA, gut-associated microbes, environmental microbes, and unclassified sequence. The strong <em>Proteus mirabilis</em> signal is biologically plausible in a fecal/gut context and was also useful technically because it provided enough reads for a focused species assembly.
+      </div>
       <div class="links">
         <a class="button" href="data/group_d.microbiome_top_species.tsv">Top species TSV</a>
         <a class="button" href="data/group_d.kraken2.top_genera.tsv">Top genera TSV</a>
@@ -426,6 +574,22 @@
         </figure>
       </div>
       <p>dnadiff was chosen because it reports direct reference alignment coverage, identity, SNPs, and indels. QUAST/metaQUAST, Mash/ANI, minimap2 summaries, and CheckM/BUSCO-style completeness checks are reasonable additions, but dnadiff directly answers the assignment's reference-comparison requirement.</p>
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Value</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reference genome</td><td><em>P. mirabilis</em> HI4320, GCF_000069965.1</td><td>Public comparison target from NCBI.</td></tr>
+          <tr><td>Assembly aligned</td><td>94.17%</td><td>Most assembled sequence aligns to the reference.</td></tr>
+          <tr><td>Reference aligned</td><td>88.73%</td><td>The assembly covers most, but not all, of the reference.</td></tr>
+          <tr><td>Average identity</td><td>99.33%</td><td>Aligned regions strongly match <em>P. mirabilis</em>.</td></tr>
+          <tr><td>Total SNPs / indels</td><td>19,002 / 2,258</td><td>Expected differences from strain variation, ONT error, and assembly fragmentation.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout caveat">
+        <strong>Assembly caveat.</strong>
+        This is a metagenomic subset assembly, not an isolate-grade closed genome. The assembly is useful for demonstrating species recovery and reference similarity, but it should not be interpreted as a complete polished genome.
+      </div>
       <div class="links">
         <a class="button" href="data/assembly_proteus_mirabilis_stats.tsv">Assembly stats TSV</a>
         <a class="button" href="data/proteus_mirabilis_dnadiff_summary.tsv">dnadiff summary TSV</a>
@@ -436,6 +600,19 @@
     <section id="reproducibility">
       <h2>6. Reproducibility and notebooks</h2>
       <p>The full analysis notebooks include the executable workflow, skip-if-present logic, tool alternatives, and the final conclusions. The Colab copy is prepared for a Google Drive-style root and can install command-line dependencies in a fresh runtime.</p>
+      <table>
+        <thead>
+          <tr><th>Step</th><th>Main tool</th><th>Why this tool</th><th>Alternatives considered</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Run provenance</td><td>MinKNOW report</td><td>Official ONT instrument report supplied with the run.</td><td>Dorado/Guppy for basecalling, pycoQC/ToulligQC for other QC views.</td></tr>
+          <tr><td>Read QC</td><td>NanoComp/NanoPlot</td><td>Directly summarizes the FASTQ files used downstream.</td><td>NanoStat or custom FASTQ parsing.</td></tr>
+          <tr><td>Host alignment</td><td>minimap2</td><td>Fast, standard ONT long-read aligner with compact PAF output.</td><td>bwa mem, GraphMap, ngmlr, BLAST, k-mer classifiers.</td></tr>
+          <tr><td>Taxonomy</td><td>Kraken2</td><td>Fast classification and read-level assignments for extraction.</td><td>Centrifuge, MetaPhlAn, Kaiju, Bracken, BLAST/DIAMOND.</td></tr>
+          <tr><td>Assembly</td><td>Flye</td><td>Practical assembler for noisy ONT reads.</td><td>Canu, Raven, Shasta, wtdbg2, metaFlye.</td></tr>
+          <tr><td>Reference comparison</td><td>dnadiff</td><td>Reports alignment coverage, identity, SNPs, and indels.</td><td>QUAST/metaQUAST, Mash/ANI, minimap2 summaries, CheckM/BUSCO.</td></tr>
+        </tbody>
+      </table>
       <div class="links">
         <a class="button" href="notebooks/FinalProject_Teaching_Step_By_Step.html">Rendered notebook</a>
         <a class="button" href="notebooks/FinalProject_Teaching_Step_By_Step.ipynb">Download notebook</a>
@@ -445,6 +622,28 @@
       <div class="callout">
         <strong>Data publishing boundary.</strong>
         This GitHub Pages site intentionally excludes raw reads, large references, BAMs, Kraken databases, downloaded tools, and the NCBI API key. Those files are local reproducibility inputs, not web-public artifacts.
+      </div>
+    </section>
+
+    <section id="presentation">
+      <h2>7. Suggested 15-minute presentation structure</h2>
+      <div class="three-col">
+        <div class="mini-card">
+          <h3>Technical methods - 5 min</h3>
+          <p>Sequencing run provenance, NanoComp/NanoPlot QC, filtering choice, and why Q10 plus length >= 500 bp was used.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Bioinformatics - 5 min</h3>
+          <p>minimap2 host comparison, domestic-cat decision, GFF overlap strategy, Kraken2 microbiome classification, and Flye assembly workflow.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Biological findings - 5 min</h3>
+          <p>Domestic-cat origin, BMP6 functional-region candidate, <em>Proteus mirabilis</em> dominance, and reference-supported assembly result.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Take-home message.</strong>
+        The sequencing data are consistent with domestic-cat fecal material containing a strong <em>Proteus mirabilis</em> microbial signal. The workflow recovers host evidence, interpretable host gene overlaps, microbial composition, and a reference-supported assembly from one abundant species.
       </div>
     </section>
   </main>
