@@ -819,7 +819,7 @@
   </header>
 
   <main class="deck" id="deck">
-    <section class="slide title" id="slide-1" data-slide="1 / 24">
+    <section class="slide title" id="slide-1" data-slide="1 / 22">
       <div>
         <p class="eyebrow">Computational genomics final project</p>
         <h1>Who left this DNA?</h1>
@@ -831,141 +831,66 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-2" data-slide="2 / 24">
+    <section class="slide" id="slide-2" data-slide="2 / 22">
       <div>
-        <p class="eyebrow">The brief</p>
-        <h2>What the assignment actually asked us to do</h2>
-      </div>
-      <div class="grid three">
-        <div class="callout blue">
-          <strong>Technical part</strong>
-          <p class="subtle">Clean and summarize the Nanopore reads. Explain why the data are usable.</p>
-        </div>
-        <div class="callout green">
-          <strong>Bioinformatics part</strong>
-          <p class="subtle">Find the host animal, classify microbes, assemble one abundant species, and validate it.</p>
-        </div>
-        <div class="callout">
-          <strong>Biological part</strong>
-          <p class="subtle">Turn the outputs into a story: what animal, what microbe, what functional region, and how confident we are.</p>
-        </div>
-      </div>
-      <div class="stats">
-        <div class="stat"><span class="number">6</span><span>candidate host genomes</span></div>
-        <div class="stat"><span class="number">300k</span><span>reads used for the first host screen</span></div>
-        <div class="stat"><span class="number">1</span><span>dominant microbial species</span></div>
-        <div class="stat"><span class="number">1</span><span>reproducible notebook pipeline</span></div>
-      </div>
-    </section>
-
-    <section class="slide" id="slide-3" data-slide="3 / 24">
-      <div>
-        <p class="eyebrow">Course context</p>
-        <h2>What we can assume from previous classes</h2>
-      </div>
-      <div class="grid three">
-        <div class="card">
-          <strong>Lesson 3: sequencing files and QC</strong>
-          <span>FASTQ, read length, Phred quality, FastQC-style reports, and deciding whether data look usable.</span>
-        </div>
-        <div class="card">
-          <strong>Lesson 4: mapping and BAMs</strong>
-          <span>Reference genomes, aligners, SAM/BAM, CIGAR, and MAPQ as a confidence score.</span>
-        </div>
-        <div class="card">
-          <strong>Lesson 5: visual inspection</strong>
-          <span>IGV, coverage at a genomic coordinate, variant evidence, and long-read technologies including ONT.</span>
-        </div>
-        <div class="card">
-          <strong>Lesson 9: assembly</strong>
-          <span>Reads overlap, k-mers, De Bruijn graphs, contigs, coverage, repeats, and why assemblies fragment.</span>
-        </div>
-        <div class="card">
-          <strong>So we do not re-teach</strong>
-          <span>FASTQ basics, what alignment means, how MAPQ is defined, or why genome browsers are useful.</span>
-        </div>
-        <div class="card">
-          <strong>We do explain</strong>
-          <span>How those ideas change for a fecal Nanopore microbiome sample.</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="slide-4" data-slide="4 / 24">
-      <div>
-        <p class="eyebrow">Analysis map</p>
-        <h2>From messy reads to a biological story</h2>
+        <p class="eyebrow">README roadmap</p>
+        <h2>We followed the final assignment step by step</h2>
       </div>
       <div class="workflow">
-        <div class="step"><b>1</b><strong>Check the reads</strong><span>Are they long enough and clean enough to trust?</span></div>
-        <div class="step"><b>2</b><strong>Find the host</strong><span>Align reads to the six candidate genomes.</span></div>
-        <div class="step"><b>3</b><strong>Pick a region</strong><span>Use gene annotations to find a readable functional-region example.</span></div>
-        <div class="step"><b>4</b><strong>Classify microbes</strong><span>Ask what else appears in the fecal DNA.</span></div>
-        <div class="step"><b>5</b><strong>Assemble and validate</strong><span>Reconstruct the dominant microbe and compare it to a reference.</span></div>
+        <div class="step"><b>1</b><strong>QC/A</strong><span>Describe FASTQ statistics, visualize metrics, and filter low-quality reads.</span></div>
+        <div class="step"><b>2</b><strong>Comparative alignment</strong><span>Align reads to the six candidate animal genomes and choose the best match.</span></div>
+        <div class="step"><b>3</b><strong>Functional region</strong><span>Find one sequenced region with a known or predicted function.</span></div>
+        <div class="step"><b>4</b><strong>Microbiome exploration</strong><span>Classify remaining reads and visualize top taxa.</span></div>
+        <div class="step"><b>5</b><strong>Species assembly</strong><span>Assemble one abundant microbe and compare it to a reference genome.</span></div>
       </div>
-      <p class="lead">The goal was not to make a fancy tool zoo. It was to make each step answer the next practical question.</p>
+      <p class="lead">The README is the presentation structure: each section below is one assignment step.</p>
     </section>
 
-    <section class="slide" id="slide-5" data-slide="5 / 24">
+    <section class="slide" id="slide-3" data-slide="3 / 22">
       <div>
-        <p class="eyebrow">What is new here?</p>
-        <h2>Same course workflow, final-project version</h2>
+        <p class="eyebrow">Get your data</p>
+        <h2>Starting point: Team D Nanopore reads and run reports</h2>
       </div>
       <div class="grid three">
-        <div class="card">
-          <strong>FastQC idea, Nanopore tools</strong>
-          <span>Instead of Illumina FastQC, we used NanoPlot/NanoComp because read length and quality behave differently for ONT reads.</span>
-        </div>
-        <div class="card">
-          <strong>BWA idea, minimap2 tool</strong>
-          <span>Same mapping logic as Lesson 4, but minimap2 is better suited for long noisy reads.</span>
-        </div>
-        <div class="card">
-          <strong>IGV idea, host region check</strong>
-          <span>Same visual sanity-check mindset as Lesson 5, now applied to a cat reference region.</span>
-        </div>
-        <div class="card">
-          <strong>New piece: microbiome classification</strong>
-          <span>Kraken2 asks "which organisms do these reads resemble?" using a k-mer database.</span>
-        </div>
-        <div class="card">
-          <strong>Assembly idea, Flye tool</strong>
-          <span>Same contig/overlap concepts as Lesson 9, but focused on one abundant bacterial species.</span>
-        </div>
-        <div class="card">
-          <strong>Reference comparison</strong>
-          <span>dnadiff checks whether our bacterial assembly resembles a known reference genome.</span>
-        </div>
+        <div class="callout blue"><strong>Input</strong><p class="subtle">Long-read FASTQ data from the Group D sample.</p></div>
+        <div class="callout green"><strong>Reports</strong><p class="subtle">MinKNOW, NanoComp, and NanoPlot summaries from the sequencing run.</p></div>
+        <div class="callout"><strong>Question</strong><p class="subtle">Which animal feces sample was sequenced, and what microbes are present?</p></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="number">Team D</span><span>our sample group</span></div>
+        <div class="stat"><span class="number">ONT</span><span>Oxford Nanopore long reads</span></div>
+        <div class="stat"><span class="number">6</span><span>candidate animal genomes</span></div>
+        <div class="stat"><span class="number">1</span><span>abundant microbe selected for assembly</span></div>
       </div>
     </section>
 
-    <section class="slide" id="slide-6" data-slide="6 / 24">
+    <section class="slide" id="slide-4" data-slide="4 / 22">
       <div>
-        <p class="eyebrow">Quality control</p>
-        <h2>First question: are the reads usable?</h2>
+        <p class="eyebrow">Step 1: QC/A</p>
+        <h2>Describe the sequences and decide how to filter</h2>
       </div>
       <div class="grid two-wide">
         <figure>
           <img src="assets/group_d_quality_retention.png" alt="Group D quality-retention plot">
-          <figcaption>Quality-retention summary used to decide how much data remains at practical quality thresholds.</figcaption>
+          <figcaption>Quality-retention plot for Group D. This supports the filtering decision.</figcaption>
         </figure>
         <div class="grid">
           <div class="callout green">
-            <strong>Answer:</strong>
-            <p class="subtle">Yes. The reads are noisy, as Nanopore reads usually are, but still usable for long-read alignment and microbial screening.</p>
+            <strong>Filtering logic:</strong>
+            <p class="subtle">Keep enough data for downstream analysis while removing the weakest reads.</p>
           </div>
           <div class="method-note">
-            <strong>Why these reports?</strong>
-            <span>MinKNOW describes the sequencing run itself. NanoComp and NanoPlot summarize the reads after the fact, which is better for reproducible QC in the notebook. FastQC is common for short reads, but less informative for Nanopore length distributions.</span>
+            <strong>Why NanoPlot/NanoComp?</strong>
+            <span>The README asks for FASTQ statistics and visualizations. NanoPlot and NanoComp are better suited than FastQC for Nanopore read length and quality summaries.</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="slide-7" data-slide="7 / 24">
+    <section class="slide" id="slide-5" data-slide="5 / 22">
       <div>
-        <p class="eyebrow">Visual QC</p>
-        <h2>Before interpreting biology, we looked at the run reports</h2>
+        <p class="eyebrow">Step 1: QC/A</p>
+        <h2>The visual reports stayed part of the analysis</h2>
       </div>
       <div class="screenshot-grid">
         <figure>
@@ -981,13 +906,13 @@
           <figcaption>NanoPlot: read length and quality distributions.</figcaption>
         </figure>
       </div>
-      <p class="lead">These browser reports are the quick visual sanity check before we trust downstream analysis.</p>
+      <p class="lead">This answers the README request for visual metrics and explains why the filtered reads were usable.</p>
     </section>
 
-    <section class="slide" id="slide-8" data-slide="8 / 24">
+    <section class="slide" id="slide-6" data-slide="6 / 22">
       <div>
-        <p class="eyebrow">Suspect lineup</p>
-        <h2>Six animals walked into the alignment step</h2>
+        <p class="eyebrow">Step 2: Comparative alignment assessment</p>
+        <h2>Six candidate animal genomes</h2>
       </div>
       <div class="animal-board">
         <div class="animal mouse">
@@ -1021,13 +946,29 @@
           <span>Useful negative control energy.</span>
         </div>
       </div>
-      <p class="lead">The mouse got a slide. The cat got the evidence.</p>
+      <p class="lead">The README asks us to decide which animal feces sample we sequenced by comparing alignments to these genomes.</p>
     </section>
 
-    <section class="slide" id="slide-9" data-slide="9 / 24">
+    <section class="slide" id="slide-7" data-slide="7 / 22">
       <div>
-        <p class="eyebrow">First try</p>
-        <h2>Let the reads vote: which genome do they align to?</h2>
+        <p class="eyebrow">Step 2: Comparative alignment assessment</p>
+        <h2>Our method for deciding which alignment is better</h2>
+      </div>
+      <div class="grid three">
+        <div class="callout blue"><strong>Mapped reads</strong><p class="subtle">How many reads aligned to each candidate genome?</p></div>
+        <div class="callout green"><strong>Aligned bases</strong><p class="subtle">How much total sequence was aligned?</p></div>
+        <div class="callout"><strong>MAPQ</strong><p class="subtle">A confidence score from the aligner. Higher is better.</p></div>
+      </div>
+      <div class="method-note">
+        <strong>Tool choice:</strong>
+        <span>The README lists minimap2 as a useful aligner for long noisy DNA reads. We used minimap2 instead of BWA because this is Nanopore data, not short paired-end Illumina data.</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-8" data-slide="8 / 22">
+      <div>
+        <p class="eyebrow">Step 2: Comparative alignment assessment</p>
+        <h2>The domestic cat genome had the strongest signal</h2>
       </div>
       <div class="grid two-wide">
         <figure>
@@ -1036,21 +977,21 @@
         </figure>
         <div class="grid">
           <div class="callout green">
-            <strong>Domestic cat had the strongest host signal.</strong>
+            <strong>Chosen animal: domestic cat</strong>
             <p class="subtle">It had the most primary mapped reads and the most aligned bases among the candidate genomes.</p>
           </div>
-          <div class="method-note">
-            <strong>Why minimap2?</strong>
-            <span>It is fast, widely used, and tuned for long noisy reads. BWA-MEM is excellent for many Illumina-style tasks, but minimap2 is the practical default for Nanopore host screening. BLAST would be too slow at this scale.</span>
+          <div class="callout blue">
+            <strong>Expected low alignment rate:</strong>
+            <p class="subtle">The README warns that fecal samples contain many microbiome reads, so low host alignment is expected.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="slide-10" data-slide="10 / 24">
+    <section class="slide" id="slide-9" data-slide="9 / 22">
       <div>
-        <p class="eyebrow">Second try</p>
-        <h2>Not just more reads. Better reads.</h2>
+        <p class="eyebrow">Step 2: Comparative alignment assessment</p>
+        <h2>Cat wins by count and confidence</h2>
       </div>
       <div class="grid two">
         <div class="table-card">
@@ -1093,23 +1034,23 @@
         </div>
         <div class="grid">
           <div class="callout blue">
-            <strong>MAPQ is the confidence check.</strong>
-            <p class="subtle">A higher MAPQ means the aligner is more confident that a read belongs at that location.</p>
+            <strong>Why not jackal?</strong>
+            <p class="subtle">Golden jackal had the next strongest signal, but fewer mapped reads, fewer aligned bases, and much lower MAPQ.</p>
           </div>
           <div class="callout green">
-            <strong>Cat wins twice.</strong>
-            <p class="subtle">More mapped signal and much higher confidence than the nearest alternative.</p>
+            <strong>Final host call:</strong>
+            <p class="subtle">Domestic cat.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="slide-11" data-slide="11 / 24">
+    <section class="slide" id="slide-10" data-slide="10 / 22">
       <div class="grid two">
         <div>
-          <p class="eyebrow">Host reveal</p>
+          <p class="eyebrow">Step 2 result</p>
           <h2>The sample origin is domestic cat</h2>
-          <p class="lead">The candidate lineup was fun. The alignment scorecard made the call.</p>
+          <p class="lead">The README asks us to present the chosen animal and explain how we decided. This is the answer.</p>
           <div class="pill-row" style="margin-top:22px;">
             <span class="pill gold">Top mapped reads</span>
             <span class="pill green">Top aligned bases</span>
@@ -1126,19 +1067,19 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-12" data-slide="12 / 24">
+    <section class="slide" id="slide-11" data-slide="11 / 22">
       <div>
-        <p class="eyebrow">Functional region requirement</p>
-        <h2>What "host locus" means in this project</h2>
+        <p class="eyebrow">Step 3: Functional region that was sequenced</p>
+        <h2>After choosing cat, we looked for a functional region</h2>
       </div>
       <div class="grid two">
         <div class="callout blue">
-          <strong>Same coordinate idea as IGV.</strong>
-          <p class="subtle">In Lesson 5, we inspected a human coordinate in IGV. Here, after the host call, we inspect cat genome intervals instead.</p>
+          <strong>README instruction:</strong>
+          <p class="subtle">Locate one genome region with functional capabilities, investigate its role, and present it in class.</p>
         </div>
         <div class="callout green">
-          <strong>"Functional" means annotated.</strong>
-          <p class="subtle">A GFF/GTF annotation file labels genome intervals as genes or other features, so a coordinate can become a named region.</p>
+          <strong>What we did:</strong>
+          <p class="subtle">Used the cat genome annotation file and counted which annotated gene regions overlapped our cat-aligned reads.</p>
         </div>
       </div>
       <div class="grid three">
@@ -1146,13 +1087,12 @@
         <div class="step"><b>2</b><strong>Cat annotation file</strong><span>A table of gene coordinates from NCBI.</span></div>
         <div class="step"><b>3</b><strong>Overlap count</strong><span>Which labeled region received the most read support?</span></div>
       </div>
-      <p class="lead">So "host locus" just means a genomic interval inside the host reference. In our case, the host reference is domestic cat.</p>
     </section>
 
-    <section class="slide" id="slide-13" data-slide="13 / 24">
+    <section class="slide" id="slide-12" data-slide="12 / 22">
       <div>
-        <p class="eyebrow">Why BMP6?</p>
-        <h2>BMP6 was our best annotated-region example</h2>
+        <p class="eyebrow">Step 3 result</p>
+        <h2>BMP6 was our functional-region example</h2>
       </div>
       <div class="grid two-wide">
         <figure>
@@ -1161,7 +1101,7 @@
         </figure>
         <div class="grid">
           <div class="callout green">
-            <strong>Why it was chosen:</strong>
+            <strong>Why BMP6?</strong>
             <p class="subtle">It was the top labeled gene region in the overlap table: 35 reads overlapped the BMP6 interval.</p>
           </div>
           <div class="callout blue">
@@ -1176,18 +1116,18 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-14" data-slide="14 / 24">
+    <section class="slide" id="slide-13" data-slide="13 / 22">
       <div>
-        <p class="eyebrow">IGV-style check</p>
-        <h2>The IGV-style view is here because the class already used IGV</h2>
+        <p class="eyebrow">Step 3 visual check</p>
+        <h2>Genome-browser style view of the BMP6 region</h2>
       </div>
       <figure>
-        <img src="assets/igv_style_bmp6_locus.png" alt="IGV-style BMP6 locus panel">
-        <figcaption>IGV-style BMP6 locus panel. It uses the same visual idea as the IGV homework: genomic coordinates, read pileup, and an annotation track.</figcaption>
+        <img src="assets/igv_style_bmp6_locus.png" alt="IGV-style BMP6 region panel">
+        <figcaption>IGV-style BMP6 region panel: genomic coordinates, read pileup, and annotation track.</figcaption>
       </figure>
       <div class="grid two">
         <div class="method-note">
-          <strong>Why an IGV-style panel?</strong>
+          <strong>Why include this view?</strong>
           <span>Summary tables can hide awkward alignments. A genome-browser view lets us sanity-check whether the reads really sit near the annotated region.</span>
         </div>
         <div class="callout rose">
@@ -1197,38 +1137,38 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-15" data-slide="15 / 24">
+    <section class="slide" id="slide-14" data-slide="14 / 22">
       <div>
-        <p class="eyebrow">Microbiome</p>
-        <h2>A fecal sample rarely travels alone</h2>
+        <p class="eyebrow">Step 4: Microbiome exploration</p>
+        <h2>Classify the remaining reads</h2>
       </div>
       <div class="grid two-wide">
         <div>
-          <p class="quote">After host screening, the next question was: who else is in there?</p>
-          <p class="lead" style="margin-top:16px;">For that, we used taxonomic classification rather than host-style whole-genome alignment.</p>
+          <p class="quote">After host screening: who else is in there?</p>
+          <p class="lead" style="margin-top:16px;">The README says most reads in fecal samples come from microbes living alongside the animal.</p>
         </div>
         <div class="grid">
           <div class="method-note">
             <strong>Why Kraken2?</strong>
-            <span>Kraken2 is fast and works well when the question is "what taxa are represented here?" Centrifuge is another lightweight classifier, MetaPhlAn is strong for marker-gene profiles, and KrakenUniq adds extra support information. Kraken2 was the best fit for a quick, reproducible species screen.</span>
+            <span>The README lists Kraken2 and Centrifuge as taxonomy-classification tools. We used Kraken2 because it is fast, works with Nanopore reads, and has small downloadable databases.</span>
           </div>
           <div class="callout blue">
-            <strong>Plain version:</strong>
-            <p class="subtle">Host alignment asks "which animal genome?" Kraken2 asks "which microbial names do these reads most resemble?"</p>
+            <strong>Output:</strong>
+            <p class="subtle">Tables and plots of top genera/species in the microbiome profile.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="slide-16" data-slide="16 / 24">
+    <section class="slide" id="slide-15" data-slide="15 / 22">
       <div>
-        <p class="eyebrow">New method for this project</p>
-        <h2>Kraken2: using k-mers for taxonomy instead of assembly</h2>
+        <p class="eyebrow">Step 4 method</p>
+        <h2>Kraken2 uses k-mers for taxonomy classification</h2>
       </div>
       <div class="grid three">
-        <div class="step"><b>1</b><strong>Use a familiar idea</strong><span>From assembly: split sequences into k-mers.</span></div>
-        <div class="step"><b>2</b><strong>But ask a different question</strong><span>Instead of building contigs, compare k-mers to a taxonomy database.</span></div>
-        <div class="step"><b>3</b><strong>Report likely taxa</strong><span>If enough k-mers point to a taxon, Kraken2 reports that label.</span></div>
+        <div class="step"><b>1</b><strong>Split reads</strong><span>Kraken2 breaks reads into short k-mers.</span></div>
+        <div class="step"><b>2</b><strong>Compare to database</strong><span>The database connects k-mers to known organisms.</span></div>
+        <div class="step"><b>3</b><strong>Summarize taxa</strong><span>The result is a microbiome classification table.</span></div>
       </div>
       <div class="grid two">
         <div class="callout green">
@@ -1242,9 +1182,9 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-17" data-slide="17 / 24">
+    <section class="slide" id="slide-16" data-slide="16 / 22">
       <div>
-        <p class="eyebrow">Microbial scorecard</p>
+        <p class="eyebrow">Step 4 result</p>
         <h2><em>Proteus</em> dominates the genus-level profile</h2>
       </div>
       <div class="grid two-wide">
@@ -1261,9 +1201,9 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-18" data-slide="18 / 24">
+    <section class="slide" id="slide-17" data-slide="17 / 22">
       <div>
-        <p class="eyebrow">Microbe reveal</p>
+        <p class="eyebrow">Step 4 result</p>
         <h2>The dominant species is <em>Proteus mirabilis</em></h2>
       </div>
       <div class="grid two-wide">
@@ -1284,15 +1224,15 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-19" data-slide="19 / 24">
+    <section class="slide" id="slide-18" data-slide="18 / 22">
       <div>
-        <p class="eyebrow">Assembly background</p>
-        <h2>Lesson 9 idea, now on one abundant microbe</h2>
+        <p class="eyebrow">Step 5: Species assembly</p>
+        <h2>Choose one abundant microbe and assemble its genome</h2>
       </div>
       <div class="grid three">
-        <div class="step"><b>1</b><strong>Pick the target</strong><span>Use Kraken2 to choose the most abundant species-level signal.</span></div>
-        <div class="step"><b>2</b><strong>Assemble its reads</strong><span>Use Flye to turn long ONT reads into contigs.</span></div>
-        <div class="step"><b>3</b><strong>Validate the result</strong><span>Compare those contigs to a reference genome with dnadiff.</span></div>
+        <div class="step"><b>1</b><strong>Pick species</strong><span><em>Proteus mirabilis</em> was the top species-level call.</span></div>
+        <div class="step"><b>2</b><strong>Assemble reads</strong><span>Flye assembled the selected long reads into contigs.</span></div>
+        <div class="step"><b>3</b><strong>Assess correctness</strong><span>dnadiff compared the assembly to a reference genome.</span></div>
       </div>
       <div class="grid two">
         <div class="method-note">
@@ -1306,19 +1246,19 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-20" data-slide="20 / 24">
+    <section class="slide" id="slide-19" data-slide="19 / 22">
       <div>
-        <p class="eyebrow">Assembly target</p>
-        <h2>Can we reconstruct the microbial co-star?</h2>
+        <p class="eyebrow">Step 5 result</p>
+        <h2>Assembly statistics</h2>
       </div>
       <div class="grid two">
         <div class="callout green">
-          <strong>Why assemble <em>Proteus mirabilis</em>?</strong>
-          <p class="subtle">It had the strongest species-level signal, so it was the best candidate for a focused assembly attempt.</p>
+          <strong>README metric:</strong>
+          <p class="subtle">Report how many contigs there are and the length of the longest one.</p>
         </div>
         <div class="callout blue">
-          <strong>What we expected:</strong>
-          <p class="subtle">Because this is a mixed fecal sample, a fragmented assembly is normal. A perfect one-contig genome would be surprising.</p>
+          <strong>Interpretation:</strong>
+          <p class="subtle">A fragmented assembly is expected from a mixed fecal sample.</p>
         </div>
       </div>
       <div class="stats">
@@ -1329,9 +1269,9 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-21" data-slide="21 / 24">
+    <section class="slide" id="slide-20" data-slide="20 / 22">
       <div>
-        <p class="eyebrow">Assembly result</p>
+        <p class="eyebrow">Step 5 result</p>
         <h2>The assembly is fragmented, but biologically useful</h2>
       </div>
       <div class="grid two-wide">
@@ -1352,10 +1292,10 @@
       </div>
     </section>
 
-    <section class="slide" id="slide-22" data-slide="22 / 24">
+    <section class="slide" id="slide-21" data-slide="21 / 22">
       <div>
-        <p class="eyebrow">Validation</p>
-        <h2>Does the assembly look like the reference?</h2>
+        <p class="eyebrow">Step 5 validation</p>
+        <h2>Compare the assembly to a reference genome</h2>
       </div>
       <div class="grid two-wide">
         <figure>
@@ -1373,45 +1313,20 @@
           </div>
           <div class="method-note">
             <strong>Why dnadiff?</strong>
-            <span>dnadiff is like a whole-genome diff tool. It aligns our assembly to a reference and reports how much matches and how similar the aligned parts are. QUAST is a strong alternative for broader assembly QC.</span>
+            <span>The README suggests dnadiff from MUMmer for comparing the assembly to a reference genome. We used it to report identity and aligned coverage.</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="slide-23" data-slide="23 / 24">
+    <section class="slide" id="slide-22" data-slide="22 / 22">
       <div>
-        <p class="eyebrow">What we trust</p>
-        <h2>Strong conclusions, careful caveats</h2>
-      </div>
-      <div class="grid two">
-        <div>
-          <h3>We trust these results</h3>
-          <ul class="plain-list">
-            <li>Host origin is domestic cat based on read count, aligned bases, and MAPQ.</li>
-            <li><em>Proteus mirabilis</em> is the dominant species-level microbial call.</li>
-            <li>The Proteus assembly is close to a reference over aligned regions.</li>
-          </ul>
-        </div>
-        <div>
-          <h3>We are careful about these points</h3>
-          <ul class="plain-list">
-            <li>BMP6 is a selected functional-region example from read overlap, not a phenotype claim.</li>
-            <li>Kraken2 depends on the database and can misclassify reads from close relatives.</li>
-            <li>The assembly is fragmented and from a mixed sample, so it is not a finished genome.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="slide-24" data-slide="24 / 24">
-      <div>
-        <p class="eyebrow">Final answer</p>
-        <h2>The short version</h2>
+        <p class="eyebrow">Summary</p>
+        <h2>Main findings, in README order</h2>
       </div>
       <div class="grid four">
         <div class="callout green">
-          <strong>Host:</strong>
+          <strong>Animal origin:</strong>
           <p class="subtle">Domestic cat.</p>
         </div>
         <div class="callout blue">
@@ -1429,6 +1344,11 @@
       </div>
       <p class="big">The cat did it.</p>
       <p class="lead"><em>Proteus mirabilis</em> left the microbial fingerprints.</p>
+      <div class="grid three">
+        <div class="card"><strong>Caveat 1</strong><span>BMP6 is a functional-region example, not a phenotype claim.</span></div>
+        <div class="card"><strong>Caveat 2</strong><span>Kraken2 classifications depend on the database.</span></div>
+        <div class="card"><strong>Caveat 3</strong><span>The assembly is not a finished genome.</span></div>
+      </div>
       <div class="download-grid">
         <a href="index.html">Full report<small>Curated GitHub Pages report</small></a>
         <a href="notebooks/FinalProject_Teaching_Step_By_Step.html">Notebook<small>Rendered reproducible analysis</small></a>
