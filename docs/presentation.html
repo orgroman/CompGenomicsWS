@@ -387,6 +387,212 @@
       padding-left: 22px;
     }
 
+    /* Example-presentation-inspired visual language: white slide,
+       dark teal frame, copper headings, and gold angled footer. */
+    :root {
+      --ink: #1c3038;
+      --muted: #63747b;
+      --panel: #ffffff;
+      --line: #d9dedb;
+      --deep: #17343d;
+      --teal: #007f74;
+      --green: #2f6f4e;
+      --rust: #9a6b3f;
+      --gold: #c5a05a;
+      --copper: #c48c62;
+      --pale-gold: #f6f0e4;
+      --pale-teal: #edf7f4;
+      --shadow: 0 16px 34px rgba(24, 48, 56, 0.18);
+    }
+
+    body {
+      background: #dbe3ea;
+      color: var(--ink);
+      font-family: Calibri, "Segoe UI", Arial, sans-serif;
+    }
+
+    .slide {
+      align-content: start;
+      gap: 22px;
+      padding: 58px 66px 56px;
+      background:
+        linear-gradient(135deg, transparent 0 86%, rgba(197, 160, 90, 0.08) 86% 100%),
+        #ffffff;
+      border: 10px solid var(--deep);
+      border-radius: 0;
+      box-shadow: var(--shadow);
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      bottom: -10px;
+      width: 52%;
+      height: 30px;
+      background: var(--gold);
+      clip-path: polygon(0 0, 88% 0, 100% 100%, 0 100%);
+      z-index: 0;
+    }
+
+    .slide::after {
+      right: 22px;
+      bottom: 18px;
+      color: #8a9aa0;
+      font-size: 0.76rem;
+      z-index: 2;
+    }
+
+    .slide > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .title {
+      grid-template-columns: 1fr;
+      text-align: center;
+      align-content: center;
+      justify-items: center;
+      color: var(--ink);
+      background:
+        repeating-linear-gradient(150deg, #1e55ff 0 9px, transparent 9px 18px) 20px 18px / 180px 62px no-repeat,
+        repeating-linear-gradient(150deg, #008f7b 0 9px, transparent 9px 18px) 20px calc(100% - 74px) / 190px 64px no-repeat,
+        repeating-linear-gradient(150deg, #69767c 0 7px, transparent 7px 17px) calc(100% - 170px) 22px / 150px 52px no-repeat,
+        linear-gradient(135deg, transparent 0 86%, rgba(197, 160, 90, 0.1) 86% 100%),
+        #ffffff;
+    }
+
+    .title .eyebrow {
+      color: var(--copper);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      color: var(--copper);
+      font-size: 3.15rem;
+      font-weight: 500;
+      line-height: 1.12;
+      max-width: 880px;
+    }
+
+    h2 {
+      color: var(--copper);
+      font-size: 2.05rem;
+      font-weight: 500;
+      line-height: 1.12;
+      max-width: 930px;
+    }
+
+    h3 {
+      color: var(--deep);
+      font-size: 1.02rem;
+      font-weight: 700;
+    }
+
+    .eyebrow {
+      color: var(--copper);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: none;
+      margin-bottom: 8px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.18rem;
+      max-width: 760px;
+      margin-top: 16px;
+    }
+
+    .title-card {
+      margin-top: 14px;
+      max-width: 700px;
+      text-align: center;
+      border: 0;
+      background: transparent;
+      padding: 0;
+    }
+
+    .title-card strong {
+      color: var(--deep);
+      font-size: 1.22rem;
+      font-weight: 600;
+    }
+
+    .title-card span {
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .kpi,
+    .card,
+    .step,
+    .note {
+      background: #ffffff;
+      border: 1px solid #dce4df;
+      border-radius: 0;
+      box-shadow: 0 1px 0 rgba(23, 52, 61, 0.05);
+    }
+
+    .kpi strong {
+      color: var(--teal);
+      font-size: 1.72rem;
+      font-weight: 700;
+    }
+
+    .step strong {
+      background: var(--teal);
+      border-radius: 0;
+    }
+
+    .answer {
+      background: var(--pale-teal);
+      border-left: 5px solid var(--teal);
+      border-radius: 0;
+      color: var(--ink);
+    }
+
+    .caveat {
+      background: var(--pale-gold);
+      border-left-color: var(--gold);
+    }
+
+    .visual {
+      border: 1px solid #dce4df;
+      border-radius: 0;
+      background: #ffffff;
+      box-shadow: 0 1px 0 rgba(23, 52, 61, 0.05);
+    }
+
+    .visual img {
+      border-radius: 0;
+    }
+
+    table {
+      border-color: #dce4df;
+      border-radius: 0;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background: #f2f0e9;
+      color: #5f6d70;
+      font-weight: 700;
+      text-transform: none;
+    }
+
+    .quote {
+      color: var(--ink);
+      border-left-color: var(--gold);
+    }
+
+    .closing {
+      background:
+        linear-gradient(135deg, transparent 0 86%, rgba(197, 160, 90, 0.12) 86% 100%),
+        #fffdf8;
+    }
+
     @media (max-width: 920px) {
       .topbar {
         position: static;
@@ -502,8 +708,6 @@
       height: 900px;
       min-height: 900px;
       margin: 0;
-      border: 0;
-      border-radius: 0;
       box-shadow: none;
     }
 
@@ -527,15 +731,13 @@
   <main class="deck" id="deck">
     <section class="slide title" id="slide-1" data-slide="01 / 14">
       <div>
-        <p class="eyebrow">Computational Genomics Final Project - Group D</p>
-        <h1>From unknown fecal reads to a biological story</h1>
-        <p class="lead">Oxford Nanopore sequencing, host-origin inference, microbiome profiling, and assembly of one dominant microbial species.</p>
+        <p class="eyebrow">Computational Genomics</p>
+        <h1>DNA Sequencing and Data Analysis</h1>
+        <p class="lead">Final Project - Group D</p>
       </div>
       <div class="title-card">
-        <strong>Headline answer</strong>
-        <span>Host origin: domestic cat</span>
-        <span>Dominant microbe: <em>Proteus mirabilis</em></span>
-        <span>Assembly support: 99.33% dnadiff identity to HI4320</span>
+        <strong>Long-read fecal microbiome analysis</strong>
+        <span>Host-origin inference, microbiome profiling, and assembly of one dominant microbial species</span>
       </div>
     </section>
 
