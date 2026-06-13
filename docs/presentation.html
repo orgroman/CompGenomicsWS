@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Group D Final Project Presentation</title>
+  <style>
+    :root {
+      --ink: #182333;
+      --muted: #657184;
+      --paper: #f7f8fb;
+      --panel: #ffffff;
+      --line: #d7dde8;
+      --deep: #10232f;
+      --teal: #245b73;
+      --green: #2f6f4e;
+      --rust: #8a5a16;
+      --rose: #b75d69;
+      --gold: #c59b44;
+      --shadow: 0 18px 48px rgba(16, 35, 47, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #dfe5ec;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.38;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1180px, calc(100% - 28px));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: #ffffff;
+      background: rgba(16, 35, 47, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 9px 12px;
+      box-shadow: 0 12px 28px rgba(16, 35, 47, 0.22);
+    }
+
+    .topbar small {
+      color: #c7dbe5;
+      font-weight: 700;
+    }
+
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .topbar a,
+    .topbar button {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font: inherit;
+      font-size: 0.86rem;
+      cursor: pointer;
+    }
+
+    .topbar a:hover,
+    .topbar button:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .progress {
+      position: fixed;
+      z-index: 25;
+      left: 0;
+      top: 0;
+      height: 4px;
+      width: 0;
+      background: var(--gold);
+    }
+
+    .deck {
+      padding: 78px 0 34px;
+    }
+
+    .slide {
+      width: min(1180px, calc(100% - 36px));
+      min-height: min(720px, calc(100vh - 112px));
+      margin: 0 auto 28px;
+      padding: 42px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      scroll-snap-align: start;
+      display: grid;
+      align-content: center;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide::after {
+      content: attr(data-slide);
+      position: absolute;
+      right: 24px;
+      bottom: 20px;
+      color: #9aa6b8;
+      font-weight: 750;
+      font-size: 0.78rem;
+    }
+
+    .title {
+      background: var(--deep);
+      color: #ffffff;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+    }
+
+    .title::after {
+      color: #a8c1ce;
+    }
+
+    .eyebrow {
+      color: #7ca8b9;
+      font-size: 0.86rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      margin: 0 0 12px;
+    }
+
+    .title .eyebrow {
+      color: #a9cad8;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 4.25rem;
+      line-height: 0.98;
+      max-width: 760px;
+    }
+
+    h2 {
+      font-size: 2.55rem;
+      line-height: 1.05;
+      max-width: 920px;
+    }
+
+    h3 {
+      font-size: 1.08rem;
+      line-height: 1.2;
+    }
+
+    .lead {
+      color: #dce9ef;
+      font-size: 1.18rem;
+      max-width: 720px;
+      margin-top: 20px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 840px;
+      margin-top: -10px;
+    }
+
+    .title-card {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.07);
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .title-card strong {
+      display: block;
+      color: #ffffff;
+      font-size: 1.55rem;
+      line-height: 1.1;
+    }
+
+    .title-card span {
+      display: block;
+      color: #c9dce5;
+      margin-top: 8px;
+    }
+
+    .kpis,
+    .cards,
+    .split,
+    .trio,
+    .process {
+      display: grid;
+      gap: 16px;
+    }
+
+    .kpis {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trio {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .split {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      align-items: center;
+    }
+
+    .process {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .kpi,
+    .card,
+    .step,
+    .note {
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .kpi strong {
+      display: block;
+      color: var(--teal);
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .kpi span,
+    .card p,
+    .step p,
+    .note p {
+      display: block;
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 0.98rem;
+    }
+
+    .step strong {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .answer {
+      border-left: 5px solid var(--green);
+      background: #eef7f1;
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      font-size: 1.12rem;
+    }
+
+    .caveat {
+      border-left-color: var(--rust);
+      background: #fff7e8;
+    }
+
+    .visual {
+      border: 1px solid var(--line);
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .visual.tall img {
+      max-height: 470px;
+      object-fit: contain;
+    }
+
+    .visual.short img {
+      max-height: 390px;
+      object-fit: contain;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.96rem;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 10px 11px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef3f6;
+      color: #4c5d70;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .emph {
+      color: var(--teal);
+      font-weight: 800;
+    }
+
+    .good {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .warn {
+      color: var(--rust);
+      font-weight: 800;
+    }
+
+    .closing {
+      background: #fdfbf5;
+    }
+
+    .closing h2 {
+      color: var(--deep);
+    }
+
+    .quote {
+      font-size: 1.46rem;
+      line-height: 1.25;
+      color: var(--deep);
+      max-width: 980px;
+      border-left: 6px solid var(--gold);
+      padding-left: 22px;
+    }
+
+    @media (max-width: 920px) {
+      .topbar {
+        position: static;
+        transform: none;
+        width: auto;
+        margin: 0;
+        border-radius: 0;
+      }
+
+      .deck {
+        padding-top: 18px;
+      }
+
+      .slide {
+        width: min(100% - 20px, 760px);
+        min-height: 0;
+        padding: 24px;
+      }
+
+      .title,
+      .split,
+      .cards,
+      .trio,
+      .kpis,
+      .process {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.55rem;
+      }
+
+      h2 {
+        font-size: 1.65rem;
+      }
+
+      h3,
+      p,
+      td,
+      th {
+        overflow-wrap: anywhere;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+
+    @media print {
+      @page {
+        size: 16in 9in;
+        margin: 0;
+      }
+
+      body {
+        background: #ffffff;
+      }
+
+      .topbar,
+      .progress {
+        display: none;
+      }
+
+      .deck {
+        padding: 0;
+        display: block;
+      }
+
+      .slide {
+        width: 16in;
+        height: 9in;
+        min-height: 9in;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        break-inside: avoid;
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+      .slide::after {
+        bottom: 22px;
+      }
+    }
+
+    body.export {
+      width: 1600px;
+      height: 900px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    body.export .topbar,
+    body.export .progress {
+      display: none;
+    }
+
+    body.export .deck {
+      padding: 0;
+      display: block;
+    }
+
+    body.export .slide {
+      width: 1600px;
+      height: 900px;
+      min-height: 900px;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    body.export .slide[hidden] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <header class="topbar">
+    <small>Group D Final Project Presentation</small>
+    <nav aria-label="Presentation links">
+      <button type="button" id="prev">Previous</button>
+      <button type="button" id="next">Next</button>
+      <a href="index.html">Report</a>
+      <a href="GroupD_FinalProject_Presentation.pdf">PDF</a>
+    </nav>
+  </header>
+
+  <main class="deck" id="deck">
+    <section class="slide title" id="slide-1" data-slide="01 / 14">
+      <div>
+        <p class="eyebrow">Computational Genomics Final Project - Group D</p>
+        <h1>From unknown fecal reads to a biological story</h1>
+        <p class="lead">Oxford Nanopore sequencing, host-origin inference, microbiome profiling, and assembly of one dominant microbial species.</p>
+      </div>
+      <div class="title-card">
+        <strong>Headline answer</strong>
+        <span>Host origin: domestic cat</span>
+        <span>Dominant microbe: <em>Proteus mirabilis</em></span>
+        <span>Assembly support: 99.33% dnadiff identity to HI4320</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2" data-slide="02 / 14">
+      <div>
+        <p class="eyebrow">One-slide summary</p>
+        <h2>The unknown sample resolves into four defensible findings</h2>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><strong>Cat</strong><span>Best host match among six candidate animal genomes.</span></div>
+        <div class="kpi"><strong>BMP6</strong><span>Top annotated domestic-cat gene overlap, with an explicit MAPQ caveat.</span></div>
+        <div class="kpi"><strong>34.35%</strong><span>Host-unmapped reads assigned to <em>P. mirabilis</em> by Kraken2 clade count.</span></div>
+        <div class="kpi"><strong>99.33%</strong><span>Average dnadiff identity of the assembly against HI4320.</span></div>
+      </div>
+      <div class="answer">
+        The strongest story is not one perfect signal; it is a chain of independent evidence: host alignment points to cat, host-unmapped taxonomy points to <em>Proteus mirabilis</em>, and assembly/reference comparison supports that microbial call.
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3" data-slide="03 / 14">
+      <div>
+        <p class="eyebrow">Talk roadmap</p>
+        <h2>A 15-minute presentation split exactly like the assignment</h2>
+      </div>
+      <div class="trio">
+        <div class="card">
+          <h3>Methods - 5 min</h3>
+          <p>Run reports, NanoComp/NanoPlot QC, filtering logic, tool choices, and reproducibility boundaries.</p>
+        </div>
+        <div class="card">
+          <h3>Bioinformatics - 5 min</h3>
+          <p>Host alignment comparison, annotation overlap, Kraken2 taxonomy, read extraction, Flye assembly, and dnadiff.</p>
+        </div>
+        <div class="card">
+          <h3>Biological findings - 5 min</h3>
+          <p>Domestic-cat origin, BMP6 as a host-region candidate, <em>Proteus mirabilis</em> dominance, and assembly caveats.</p>
+        </div>
+      </div>
+      <div class="process">
+        <div class="step"><strong>1</strong><h3>QC</h3><p>What data do we trust?</p></div>
+        <div class="step"><strong>2</strong><h3>Filter</h3><p>Keep enough signal.</p></div>
+        <div class="step"><strong>3</strong><h3>Host</h3><p>Which animal?</p></div>
+        <div class="step"><strong>4</strong><h3>Region</h3><p>Which host locus?</p></div>
+        <div class="step"><strong>5</strong><h3>Microbes</h3><p>Who is in the sample?</p></div>
+        <div class="step"><strong>6</strong><h3>Assembly</h3><p>Can we recover a genome?</p></div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-4" data-slide="04 / 14">
+      <div>
+        <p class="eyebrow">Input data and QC</p>
+        <h2>The sample is rich enough for discovery, but noisy enough to demand filtering</h2>
+      </div>
+      <div class="split">
+        <div>
+          <table>
+            <thead><tr><th>Metric</th><th>Group D FASTQ</th><th>Why it matters</th></tr></thead>
+            <tbody>
+              <tr><td>Reads</td><td>1,803,479</td><td>Enough depth for screening and classification.</td></tr>
+              <tr><td>Total bases</td><td>1.98 Gb</td><td>Enough sequence for a pilot metagenomic assembly.</td></tr>
+              <tr><td>Median read length</td><td>512 bp</td><td>Many reads are short for ONT, so length filtering helps.</td></tr>
+              <tr><td>N50</td><td>2,297 bp</td><td>Longer reads still anchor alignments and assembly.</td></tr>
+              <tr><td>Mean quality</td><td>10.4</td><td>Supports Q10 as a practical floor.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">
+          <h3>Why MinKNOW plus NanoComp?</h3>
+          <p><span class="emph">MinKNOW</span> explains the sequencing run: device, flow cell, kit, basecalling, and run counters.</p>
+          <p><span class="emph">NanoComp/NanoPlot</span> explain the analyzed FASTQ: read counts, bases, length, N50, and quality distribution.</p>
+          <p>The downstream workflow uses FASTQ-level evidence because those are the reads that enter alignment, classification, and assembly.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5" data-slide="05 / 14">
+      <div>
+        <p class="eyebrow">Filtering decision</p>
+        <h2>Q10 keeps the usable signal; Q15 and Q20 become too expensive</h2>
+      </div>
+      <div class="split">
+        <div class="visual short">
+          <img src="assets/group_d_quality_retention.png" alt="Quality retention plot for Group D reads and bases">
+          <p class="caption">Q10 retains 75.2% of reads and 82.2% of bases. Q20 retains only 8.4% of reads.</p>
+        </div>
+        <div>
+          <table>
+            <thead><tr><th>Cutoff</th><th>Reads</th><th>Bases</th><th>Decision</th></tr></thead>
+            <tbody>
+              <tr><td>Raw</td><td>1.80 M</td><td>1.98 Gb</td><td>Baseline evidence.</td></tr>
+              <tr><td>&gt;Q10</td><td>1.36 M</td><td>1.63 Gb</td><td><span class="good">Chosen</span> for main analysis.</td></tr>
+              <tr><td>&gt;Q15</td><td>0.87 M</td><td>1.25 Gb</td><td>Cleaner but discards too much.</td></tr>
+              <tr><td>&gt;Q20</td><td>0.15 M</td><td>0.20 Gb</td><td>Too sparse for broad exploration.</td></tr>
+            </tbody>
+          </table>
+          <div class="answer caveat">
+            Final filter: Q >= 10 and length >= 500 bp. The first 300,000 filtered reads were used as a reproducible pilot for the six-genome host comparison.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-6" data-slide="06 / 14">
+      <div>
+        <p class="eyebrow">Host-origin inference</p>
+        <h2>The host signal is low, but the relative winner is clear: domestic cat</h2>
+      </div>
+      <div class="split">
+        <div class="visual short">
+          <img src="assets/host_alignment_comparison.png" alt="Host alignment comparison across six candidate animal genomes">
+          <p class="caption">minimap2 PAF summaries across six assignment candidate genomes.</p>
+        </div>
+        <div>
+          <table>
+            <thead><tr><th>Candidate</th><th>Primary mapped</th><th>Mean MAPQ</th></tr></thead>
+            <tbody>
+              <tr><td><span class="good">Domestic cat</span></td><td>14,669</td><td>50.34</td></tr>
+              <tr><td>Golden jackal</td><td>9,251</td><td>28.25</td></tr>
+              <tr><td>Little brown bat</td><td>3,818</td><td>19.20</td></tr>
+              <tr><td>Norway rat</td><td>1,393</td><td>9.05</td></tr>
+              <tr><td>House mouse</td><td>1,379</td><td>15.55</td></tr>
+              <tr><td>Eastern gray kangaroo</td><td>1,155</td><td>13.71</td></tr>
+            </tbody>
+          </table>
+          <div class="answer">
+            Fecal samples are mostly microbial, so host-mapping percentage is expected to be low. The decision comes from the consistent relative pattern across all candidates.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7" data-slide="07 / 14">
+      <div>
+        <p class="eyebrow">Why this host method?</p>
+        <h2>Tool choices were made to match ONT reads and the assignment scale</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3>minimap2 for host alignment</h3>
+          <p>Chosen because <code>map-ont</code> is designed for noisy long reads, runs quickly on large genomes, and produces compact PAF summaries.</p>
+        </div>
+        <div class="card">
+          <h3>Why not BLAST or short-read aligners?</h3>
+          <p>BLAST is too slow for six large genomes at this scale. Short-read aligners are less natural for noisy ONT read length/error profiles.</p>
+        </div>
+        <div class="card">
+          <h3>Decision metric</h3>
+          <p>Use a combination of primary mapped reads, aligned bases, and mapping quality instead of a single count.</p>
+        </div>
+        <div class="card">
+          <h3>Interpretation guardrail</h3>
+          <p>Low host fraction is not a failure. It is exactly what a fecal sample should look like when microbiome DNA dominates.</p>
+        </div>
+      </div>
+      <div class="answer">
+        The assignment did not require a perfect host assembly; it required a reasoned comparative alignment decision. Domestic cat is the strongest supported host under that rule.
+      </div>
+    </section>
+
+    <section class="slide" id="slide-8" data-slide="08 / 14">
+      <div>
+        <p class="eyebrow">Functional host region</p>
+        <h2>BMP6 is the best interpretable host-region candidate, but it needs a caveat</h2>
+      </div>
+      <div class="split">
+        <div class="visual short">
+          <img src="assets/host_functional_regions_top_genes.png" alt="Top domestic-cat genes supported by mapped reads">
+          <p class="caption">Read-to-GFF overlap finds BMP6 as the top summarized annotated gene.</p>
+        </div>
+        <div>
+          <div class="card">
+            <h3>Biological role</h3>
+            <p>BMP6 is a bone morphogenetic protein family member in TGF-beta signaling, with roles in development, skeletal biology, and iron/hepcidin regulation.</p>
+          </div>
+          <div class="card">
+            <h3>Why not a predicted LOC gene?</h3>
+            <p>BMP6 has a recognizable biological function, making it a better presentation target than a high-count predicted locus with unclear interpretation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-9" data-slide="09 / 14">
+      <div>
+        <p class="eyebrow">BMP6 locus inspection</p>
+        <h2>The genome-browser view is where we stay honest</h2>
+      </div>
+      <div class="visual tall">
+        <img src="assets/igv_style_bmp6_locus.png" alt="IGV-style BMP6 locus view with coverage and MAPQ-colored reads">
+        <p class="caption">Most BMP6-supporting reads form a narrow low-MAPQ pileup; two separate MAPQ-60 reads support a second interval. Good presentation claim: BMP6 is a candidate functional region, not complete high-confidence gene coverage.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-10" data-slide="10 / 14">
+      <div>
+        <p class="eyebrow">Microbiome exploration</p>
+        <h2>Kraken2 classifies most host-unmapped reads and highlights Proteus</h2>
+      </div>
+      <div class="split">
+        <div class="visual short">
+          <img src="assets/group_d_microbiome_classification_and_genera.png" alt="Kraken2 classification rate and top genera">
+          <p class="caption">76.08% of host-unmapped reads are classified. Proteus dominates the genus-level profile.</p>
+        </div>
+        <div>
+          <div class="kpis">
+            <div class="kpi"><strong>285k</strong><span>Host-unmapped reads profiled.</span></div>
+            <div class="kpi"><strong>76.08%</strong><span>Classified by Kraken2.</span></div>
+            <div class="kpi"><strong>35.11%</strong><span><em>Proteus</em> genus clade reads.</span></div>
+            <div class="kpi"><strong>23.92%</strong><span>Unclassified reads.</span></div>
+          </div>
+          <div class="answer caveat">
+            Kraken2 was chosen over Centrifuge/MetaPhlAn/BLAST-style alternatives because it is fast, has compact public databases, and preserves read-level assignments for assembly extraction.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-11" data-slide="11 / 14">
+      <div>
+        <p class="eyebrow">Dominant microbial species</p>
+        <h2><em>Proteus mirabilis</em> is the clear assembly target</h2>
+      </div>
+      <div class="split">
+        <div>
+          <table>
+            <thead><tr><th>Species</th><th>Clade reads</th><th>Percent</th></tr></thead>
+            <tbody>
+              <tr><td><span class="good"><em>Proteus mirabilis</em></span></td><td>98,025</td><td>34.35%</td></tr>
+              <tr><td><em>Escherichia coli</em></td><td>11,794</td><td>4.13%</td></tr>
+              <tr><td><em>Glutamicibacter protophormiae</em></td><td>6,029</td><td>2.11%</td></tr>
+              <tr><td><em>Solibacillus daqui</em></td><td>4,860</td><td>1.70%</td></tr>
+              <tr><td><em>Sporosarcina oncorhynchi</em></td><td>3,486</td><td>1.22%</td></tr>
+            </tbody>
+          </table>
+          <div class="answer">
+            It is abundant enough to extract reads, biologically plausible in a fecal context, and has public reference genomes for correctness assessment.
+          </div>
+        </div>
+        <div class="visual short">
+          <img src="assets/group_d.microbiome_top_species.png" alt="Top species in host-unmapped Group D reads">
+          <p class="caption"><em>P. mirabilis</em> is far above the next species-level calls.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-12" data-slide="12 / 14">
+      <div>
+        <p class="eyebrow">Assembly strategy</p>
+        <h2>Extract one abundant species, assemble it, then compare to a reference</h2>
+      </div>
+      <div class="process">
+        <div class="step"><strong>1</strong><h3>Classify</h3><p>Kraken2 on host-unmapped reads.</p></div>
+        <div class="step"><strong>2</strong><h3>Choose</h3><p><em>P. mirabilis</em> as dominant species.</p></div>
+        <div class="step"><strong>3</strong><h3>Extract</h3><p>98,025 species/child-taxid reads.</p></div>
+        <div class="step"><strong>4</strong><h3>Assemble</h3><p>Flye for noisy ONT reads.</p></div>
+        <div class="step"><strong>5</strong><h3>Reference</h3><p>HI4320 from NCBI.</p></div>
+        <div class="step"><strong>6</strong><h3>Validate</h3><p>dnadiff identity and aligned coverage.</p></div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3>Why Flye?</h3>
+          <p>Practical long-read assembler for noisy ONT data. Lighter for this notebook workflow than Canu, and more appropriate than short-read assemblers.</p>
+        </div>
+        <div class="card">
+          <h3>Why dnadiff?</h3>
+          <p>Directly answers the assignment's correctness question with aligned coverage, identity, SNPs, and indels against a public reference.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-13" data-slide="13 / 14">
+      <div>
+        <p class="eyebrow">Assembly result</p>
+        <h2>The assembly is fragmented, but strongly reference-supported</h2>
+      </div>
+      <div class="split">
+        <div class="visual short">
+          <img src="assets/proteus_assembly_contigs.png" alt="Proteus assembly contig length and coverage plots">
+          <p class="caption">Flye assembly: 3.86 Mbp, 24 contigs, longest contig 577,987 bp, N50 249,377 bp.</p>
+        </div>
+        <div class="visual short">
+          <img src="assets/proteus_dnadiff_summary.png" alt="dnadiff reference comparison summary">
+          <p class="caption">dnadiff: 94.17% of assembly aligned, 88.73% of reference aligned, 99.33% average identity.</p>
+        </div>
+      </div>
+      <div class="answer caveat">
+        This is not a closed isolate-grade genome. It is a metagenomic long-read species recovery with strong reference similarity.
+      </div>
+    </section>
+
+    <section class="slide closing" id="slide-14" data-slide="14 / 14">
+      <div>
+        <p class="eyebrow">Final message</p>
+        <h2>What we learned from Group D's unknown sample</h2>
+      </div>
+      <p class="quote">The most defensible biological story is: a domestic-cat fecal sample with a strong <em>Proteus mirabilis</em> signal, plus enough long-read evidence to recover a fragmented but high-identity assembly for the dominant microbe.</p>
+      <div class="trio">
+        <div class="card"><h3>Technically</h3><p>QC and filtering preserved enough signal for host comparison, taxonomy, and assembly.</p></div>
+        <div class="card"><h3>Bioinformatically</h3><p>Independent tools converged: minimap2 for host, GFF overlap for BMP6, Kraken2 for microbes, Flye plus dnadiff for assembly.</p></div>
+        <div class="card"><h3>Biologically</h3><p>The host and microbiome findings are plausible for fecal material, with caveats stated where evidence is limited.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const progress = document.getElementById('progress');
+    const params = new URLSearchParams(window.location.search);
+    const exportSlide = params.get('exportSlide');
+    let current = 0;
+
+    if (exportSlide) {
+      document.body.classList.add('export');
+      slides.forEach(slide => {
+        slide.hidden = slide.id !== exportSlide;
+      });
+    }
+
+    function nearestSlide() {
+      const middle = window.scrollY + window.innerHeight / 2;
+      let best = 0;
+      let bestDistance = Infinity;
+      slides.forEach((slide, index) => {
+        const center = slide.offsetTop + slide.offsetHeight / 2;
+        const distance = Math.abs(center - middle);
+        if (distance < bestDistance) {
+          best = index;
+          bestDistance = distance;
+        }
+      });
+      return best;
+    }
+
+    function updateProgress() {
+      current = nearestSlide();
+      const pct = ((current + 1) / slides.length) * 100;
+      progress.style.width = `${pct}%`;
+    }
+
+    function go(delta) {
+      current = Math.max(0, Math.min(slides.length - 1, nearestSlide() + delta));
+      slides[current].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', `#${slides[current].id}`);
+    }
+
+    document.getElementById('prev').addEventListener('click', () => go(-1));
+    document.getElementById('next').addEventListener('click', () => go(1));
+    if (!exportSlide) {
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress);
+      window.addEventListener('keydown', event => {
+        if (['ArrowRight', 'PageDown', ' '].includes(event.key)) {
+          event.preventDefault();
+          go(1);
+        }
+        if (['ArrowLeft', 'PageUp'].includes(event.key)) {
+          event.preventDefault();
+          go(-1);
+        }
+      });
+      updateProgress();
+    }
+  </script>
+</body>
+</html>

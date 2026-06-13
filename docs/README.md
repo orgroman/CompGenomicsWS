@@ -18,6 +18,8 @@ The site includes only small, presentation-ready outputs:
 - Small TSV result tables in `data/`
 - Provided QC/run HTML reports in `reports/`
 - Executed notebooks and rendered notebook HTML in `notebooks/`
+- A presenter-ready slide deck in `presentation.html`
+- A printable presentation PDF in `GroupD_FinalProject_Presentation.pdf`
 
 ## What is intentionally excluded
 
