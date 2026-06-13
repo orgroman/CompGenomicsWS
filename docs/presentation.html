@@ -860,33 +860,33 @@
 
     <section class="slide" id="slide-3" data-slide="3 / 24">
       <div>
-        <p class="eyebrow">Tiny dictionary</p>
-        <h2>Six biology words translated for a CS room</h2>
+        <p class="eyebrow">Course context</p>
+        <h2>What we can assume from previous classes</h2>
       </div>
       <div class="grid three">
         <div class="card">
-          <strong>Read</strong>
-          <span>One DNA fragment reported by the sequencer. In CS terms: one noisy string sampled from a much larger text.</span>
+          <strong>Lesson 3: sequencing files and QC</strong>
+          <span>FASTQ, read length, Phred quality, FastQC-style reports, and deciding whether data look usable.</span>
         </div>
         <div class="card">
-          <strong>Reference genome</strong>
-          <span>A known genome used as a coordinate system. We ask: where would this read fit best?</span>
+          <strong>Lesson 4: mapping and BAMs</strong>
+          <span>Reference genomes, aligners, SAM/BAM, CIGAR, and MAPQ as a confidence score.</span>
         </div>
         <div class="card">
-          <strong>Alignment</strong>
-          <span>Approximate string matching between a read and a reference genome.</span>
+          <strong>Lesson 5: visual inspection</strong>
+          <span>IGV, coverage at a genomic coordinate, variant evidence, and long-read technologies including ONT.</span>
         </div>
         <div class="card">
-          <strong>MAPQ</strong>
-          <span>A confidence score from the aligner. High MAPQ means the read has a clearer best location.</span>
+          <strong>Lesson 9: assembly</strong>
+          <span>Reads overlap, k-mers, De Bruijn graphs, contigs, coverage, repeats, and why assemblies fragment.</span>
         </div>
         <div class="card">
-          <strong>Locus</strong>
-          <span>A genomic address or interval, written like reference:start-end.</span>
+          <strong>So we do not re-teach</strong>
+          <span>FASTQ basics, what alignment means, how MAPQ is defined, or why genome browsers are useful.</span>
         </div>
         <div class="card">
-          <strong>Gene annotation</strong>
-          <span>A map that labels some intervals as genes or regulatory features. Without it, coordinates are just coordinates.</span>
+          <strong>We do explain</strong>
+          <span>How those ideas change for a fecal Nanopore microbiome sample.</span>
         </div>
       </div>
     </section>
@@ -908,32 +908,35 @@
 
     <section class="slide" id="slide-5" data-slide="5 / 24">
       <div>
-        <p class="eyebrow">Tool names in plain English</p>
-        <h2>What the software did, before we throw names around</h2>
+        <p class="eyebrow">What is new here?</p>
+        <h2>Same course workflow, final-project version</h2>
       </div>
-      <div class="grid four">
+      <div class="grid three">
         <div class="card">
-          <span class="kicker">minimap2</span>
-          <strong style="margin-top:12px;">Long-read aligner</strong>
-          <span>Finds where noisy Nanopore reads best match a reference genome.</span>
+          <strong>FastQC idea, Nanopore tools</strong>
+          <span>Instead of Illumina FastQC, we used NanoPlot/NanoComp because read length and quality behave differently for ONT reads.</span>
         </div>
         <div class="card">
-          <span class="kicker">Kraken2</span>
-          <strong style="margin-top:12px;">Taxonomy classifier</strong>
-          <span>Breaks reads into short k-mers and votes for likely microbes using a database.</span>
+          <strong>BWA idea, minimap2 tool</strong>
+          <span>Same mapping logic as Lesson 4, but minimap2 is better suited for long noisy reads.</span>
         </div>
         <div class="card">
-          <span class="kicker">Flye</span>
-          <strong style="margin-top:12px;">Genome assembler</strong>
-          <span>Turns many overlapping long reads into longer reconstructed chunks called contigs.</span>
+          <strong>IGV idea, host region check</strong>
+          <span>Same visual sanity-check mindset as Lesson 5, now applied to a cat reference region.</span>
         </div>
         <div class="card">
-          <span class="kicker">dnadiff</span>
-          <strong style="margin-top:12px;">Assembly checker</strong>
-          <span>Compares our assembled sequence to a known reference and reports identity/coverage.</span>
+          <strong>New piece: microbiome classification</strong>
+          <span>Kraken2 asks "which organisms do these reads resemble?" using a k-mer database.</span>
+        </div>
+        <div class="card">
+          <strong>Assembly idea, Flye tool</strong>
+          <span>Same contig/overlap concepts as Lesson 9, but focused on one abundant bacterial species.</span>
+        </div>
+        <div class="card">
+          <strong>Reference comparison</strong>
+          <span>dnadiff checks whether our bacterial assembly resembles a known reference genome.</span>
         </div>
       </div>
-      <p class="lead">The names are less important than the questions: align, classify, assemble, compare.</p>
     </section>
 
     <section class="slide" id="slide-6" data-slide="6 / 24">
@@ -1126,16 +1129,16 @@
     <section class="slide" id="slide-12" data-slide="12 / 24">
       <div>
         <p class="eyebrow">Functional region requirement</p>
-        <h2>What does "host locus" mean here?</h2>
+        <h2>What "host locus" means in this project</h2>
       </div>
       <div class="grid two">
         <div class="callout blue">
-          <strong>A locus is just an address in the host genome.</strong>
-          <p class="subtle">After we decided the host was cat, we asked: which annotated cat genome intervals overlap our cat-aligned reads?</p>
+          <strong>Same coordinate idea as IGV.</strong>
+          <p class="subtle">In Lesson 5, we inspected a human coordinate in IGV. Here, after the host call, we inspect cat genome intervals instead.</p>
         </div>
         <div class="callout green">
-          <strong>"Functional" means the address has a known label.</strong>
-          <p class="subtle">The annotation file labels some intervals as genes. Those labels let us say something biological instead of only reporting coordinates.</p>
+          <strong>"Functional" means annotated.</strong>
+          <p class="subtle">A GFF/GTF annotation file labels genome intervals as genes or other features, so a coordinate can become a named region.</p>
         </div>
       </div>
       <div class="grid three">
@@ -1143,7 +1146,7 @@
         <div class="step"><b>2</b><strong>Cat annotation file</strong><span>A table of gene coordinates from NCBI.</span></div>
         <div class="step"><b>3</b><strong>Overlap count</strong><span>Which labeled region received the most read support?</span></div>
       </div>
-      <p class="lead">So "host locus" is not a new organism and not a phenotype claim. It is a genomic address inside the cat reference.</p>
+      <p class="lead">So "host locus" just means a genomic interval inside the host reference. In our case, the host reference is domestic cat.</p>
     </section>
 
     <section class="slide" id="slide-13" data-slide="13 / 24">
@@ -1176,16 +1179,16 @@
     <section class="slide" id="slide-14" data-slide="14 / 24">
       <div>
         <p class="eyebrow">IGV-style check</p>
-        <h2>A genome-browser view makes the BMP6 claim less abstract</h2>
+        <h2>The IGV-style view is here because the class already used IGV</h2>
       </div>
       <figure>
         <img src="assets/igv_style_bmp6_locus.png" alt="IGV-style BMP6 locus panel">
-        <figcaption>IGV-style BMP6 locus panel. The top track is the genomic address, the middle shows read pileup, and the annotation track marks the gene interval.</figcaption>
+        <figcaption>IGV-style BMP6 locus panel. It uses the same visual idea as the IGV homework: genomic coordinates, read pileup, and an annotation track.</figcaption>
       </figure>
       <div class="grid two">
         <div class="method-note">
           <strong>Why an IGV-style panel?</strong>
-          <span>Summary tables can hide awkward alignments. A genome-browser view lets us see reads sitting on a coordinate system, like a debugger for genome results.</span>
+          <span>Summary tables can hide awkward alignments. A genome-browser view lets us sanity-check whether the reads really sit near the annotated region.</span>
         </div>
         <div class="callout rose">
           <strong>Read it carefully:</strong>
@@ -1219,13 +1222,13 @@
 
     <section class="slide" id="slide-16" data-slide="16 / 24">
       <div>
-        <p class="eyebrow">Kraken2 without magic</p>
-        <h2>How a read becomes a microbial name</h2>
+        <p class="eyebrow">New method for this project</p>
+        <h2>Kraken2: using k-mers for taxonomy instead of assembly</h2>
       </div>
       <div class="grid three">
-        <div class="step"><b>1</b><strong>Cut into k-mers</strong><span>Each read is split into many short DNA words.</span></div>
-        <div class="step"><b>2</b><strong>Look up words</strong><span>The database links DNA words to organisms.</span></div>
-        <div class="step"><b>3</b><strong>Vote carefully</strong><span>If enough words point to the same taxon, Kraken2 reports that label.</span></div>
+        <div class="step"><b>1</b><strong>Use a familiar idea</strong><span>From assembly: split sequences into k-mers.</span></div>
+        <div class="step"><b>2</b><strong>But ask a different question</strong><span>Instead of building contigs, compare k-mers to a taxonomy database.</span></div>
+        <div class="step"><b>3</b><strong>Report likely taxa</strong><span>If enough k-mers point to a taxon, Kraken2 reports that label.</span></div>
       </div>
       <div class="grid two">
         <div class="callout green">
@@ -1234,7 +1237,7 @@
         </div>
         <div class="callout rose">
           <strong>Why we still keep caveats:</strong>
-          <p class="subtle">The answer depends on the database. Closely related organisms can share many DNA words.</p>
+          <p class="subtle">The answer depends on the database. Closely related organisms can share many k-mers.</p>
         </div>
       </div>
     </section>
@@ -1284,17 +1287,17 @@
     <section class="slide" id="slide-19" data-slide="19 / 24">
       <div>
         <p class="eyebrow">Assembly background</p>
-        <h2>What does it mean to "assemble a genome"?</h2>
+        <h2>Lesson 9 idea, now on one abundant microbe</h2>
       </div>
       <div class="grid three">
-        <div class="step"><b>1</b><strong>Reads are pieces</strong><span>Each read is a noisy fragment from the microbial genome.</span></div>
-        <div class="step"><b>2</b><strong>Overlaps connect pieces</strong><span>If two reads share sequence, they may come from neighboring positions.</span></div>
-        <div class="step"><b>3</b><strong>Contigs are longer chunks</strong><span>The assembler outputs reconstructed sequences, not necessarily one perfect chromosome.</span></div>
+        <div class="step"><b>1</b><strong>Pick the target</strong><span>Use Kraken2 to choose the most abundant species-level signal.</span></div>
+        <div class="step"><b>2</b><strong>Assemble its reads</strong><span>Use Flye to turn long ONT reads into contigs.</span></div>
+        <div class="step"><b>3</b><strong>Validate the result</strong><span>Compare those contigs to a reference genome with dnadiff.</span></div>
       </div>
       <div class="grid two">
         <div class="method-note">
           <strong>What Flye did:</strong>
-          <span>Flye used the long noisy reads to build those longer contigs. It is the reconstruction step, not the classifier and not the validator.</span>
+          <span>Flye is the assembler: it reconstructs contigs from noisy long reads. It is not the classifier and not the validation step.</span>
         </div>
         <div class="method-note">
           <strong>Why Flye?</strong>
